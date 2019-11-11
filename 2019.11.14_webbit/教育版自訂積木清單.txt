@@ -1,0 +1,71 @@
+物件偵測(Microsoft Azure Custom Vision) 
+https://fustyles.github.io/webduino/Azure_ClassifyImage_20190901/blockly.json
+
+人臉偵測(Microsoft Azure) 
+https://fustyles.github.io/webduino/Azure_FaceDetection_20190901/blockly.json
+
+WebBit教育版 法蘭斯點矩陣(不可與官方積木混用)
+https://fustyles.github.io/webduino/EDU_bit_MatrixLed_20190827/blockly.json
+
+姿態偵測 (tfjs posenet)
+https://fustyles.github.io/webduino/posenet_20190822/blockly.json
+
+物件偵測 (tfjs mobilenet)
+https://fustyles.github.io/webduino/mobilenet_20190821/blockly.json
+
+物件偵測 (tfjs coco-ssd)
+https://fustyles.github.io/webduino/coco-ssd_20190821/blockly.json
+
+深度學習 (tfjs KNN-Classifier)
+https://fustyles.github.io/webduino/knn-classifier_20190608/blockly.json
+
+溫濕度變化圖(D3.js)
+https://fustyles.github.io/webduino/DHTchart-20180103/blockly.json
+
+遊戲元素
+https://fustyles.github.io/webduino/GameElements_20190131/blockly.json
+
+顯示網頁
+https://fustyles.github.io/webduino/iframe_20180802/blockly.json
+
+朗讀語言擴充
+https://fustyles.github.io/webduino/speak_setting_sample_fustyles/blockly.json
+
+thingspeak
+https://fustyles.github.io/webduino/ThingSpeak_20180401/blockly.json
+
+Javascript 指令擴充
+
+
+監看程式碼(開啟瀏覽器主控台觀看程式碼)
+https://fustyles.github.io/webduino/ShowCode_20181216/blockly.json
+
+My Firmata for ESP01、ESP12E、ESP32、LinkIt7697(網址要用HTTP)
+https://fustyles.github.io/webduino/ESP8266_20190128/blockly.json
+[ ESP韌體 ]
+<ESP32 Lcd1602 I2C>
+Library: 
+https://github.com/nhatuan84/esp32-lcd
+Firmware: 
+https://github.com/fustyles/Arduino/blob/master/ESP32_MyBlockly_JSON.ino
+<ESP12E Lcd1602 I2C>
+Library: 
+https://github.com/fdebrabander/Arduino-LiquidCrystal-I2C-library
+Firmware: 
+https://github.com/fustyles/Arduino/blob/master/ESP12E_MyBlockly_JSON.ino
+<ESP01 Lcd1602 I2C>
+Library: 
+https://github.com/agnunez/ESP8266-I2C-LCD1602
+Firmware: 
+https://github.com/fustyles/Arduino/blob/master/ESP01_MyBlockly_JSON.ino
+<LinkIt7697>
+Library: 
+https://bitbucket.org/fmalpartida/new-liquidcrystal/downloads/NewLiquidCrystal_1.5.1.zip
+Firmware: 
+https://github.com/fustyles/Arduino/blob/master/LinkIt7697_MyBlockly_JSON.ino
+
+
+WebBit(網址要用HTTP)
+https://fustyles.github.io/webduino/WebBit_20190225/blockly.json
+[Wibbit韌體]
+https://github.com/fustyles/Arduino/blob/master/WebBit_ESP32_MyBlockly_JSON.ino
