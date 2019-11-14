@@ -16,22 +16,22 @@ https://fustyles.github.io/webduino/EDU_speak_setting/blockly.json
 監看程式碼 (http://localhost:20975/blockly/)
 https://fustyles.github.io/webduino/ShowCode_20181216/blockly.json
 
-姿態偵測 (tfjs posenet)
+姿態辨識 (tfjs posenet)
 https://fustyles.github.io/webduino/posenet_20190822/blockly.json
 
-物件偵測 (tfjs mobilenet)
+物件辨識 (tfjs mobilenet)
 https://fustyles.github.io/webduino/mobilenet_20190821/blockly.json
 
-物件偵測 (tfjs coco-ssd)
+物件辨識 (tfjs coco-ssd)
 https://fustyles.github.io/webduino/coco-ssd_20190821/blockly.json
 
-物件偵測(Microsoft Azure Custom Vision) 
+物件辨識(Microsoft Azure Custom Vision) 
 https://fustyles.github.io/webduino/Azure_ClassifyImage_20190901/blockly.json
 
-人臉偵測(Microsoft Azure) 
+情緒辨識(Microsoft Azure) 
 https://fustyles.github.io/webduino/Azure_FaceDetection_20190901/blockly.json
 
-人臉偵測(Tracking)
+人臉辨識(Tracking)
 https://fustyles.github.io/webduino/Tracking_20190917/blockly.json
 
 深度學習 (tfjs KNN-Classifier)
