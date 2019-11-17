@@ -28,8 +28,11 @@ https://fustyles.github.io/webduino/coco-ssd_20190821/blockly.json
 物件辨識(Microsoft Azure Custom Vision) 
 https://fustyles.github.io/webduino/Azure_ClassifyImage_20190901/blockly.json
 
-情緒辨識(Microsoft Azure) 
+人臉辨識(Microsoft Azure Face API) 
 https://fustyles.github.io/webduino/Azure_FaceDetection_20190901/blockly.json
+
+尋找相似臉(Microsoft Azure Face API)
+https://fustyles.github.io/webduino/Azure_FaceFindSimilar_20191117/blockly.json
 
 人臉辨識(Tracking)
 https://fustyles.github.io/webduino/Tracking_20190917/blockly.json
