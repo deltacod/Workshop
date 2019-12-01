@@ -44,3 +44,8 @@ WebBit(網址要用HTTP)
 https://fustyles.github.io/webduino/WebBit_20190225/blockly.json
 [Wibbit韌體]
 https://github.com/fustyles/Arduino/blob/master/WebBit_ESP32_MyBlockly_JSON.ino
+
+ESP32-CAM(網址要用HTTP)
+https://fustyles.github.io/webduino/ESP32-CAM_20191201/blockly.json
+[ESP32-CAM Firmware]
+https://github.com/fustyles/Arduino/tree/master/ESP32-CAM_MyBlockly_JSON
