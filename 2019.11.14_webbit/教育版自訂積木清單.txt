@@ -44,3 +44,5 @@ ESP32-CAM(網址要用HTTP)
 https://fustyles.github.io/webduino/ESP32-CAM_20191201/blockly.json
 [ESP32-CAM 韌體]
 https://github.com/fustyles/Arduino/tree/master/ESP32-CAM_MyBlockly_JSON
+或
+https://github.com/fustyles/Arduino/tree/master/ESP32-CAM_MyBlockly_JSON_PAGE
