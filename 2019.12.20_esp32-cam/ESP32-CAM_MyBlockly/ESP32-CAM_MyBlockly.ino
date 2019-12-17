@@ -23,10 +23,10 @@ http://192.168.4.1/?digitalwrite=gpio;value;stop
 http://192.168.4.1/?restart=stop
 */
 
-// Enter your WiFi ssid and password
+//輸入WIFI連線帳號密碼
 const char* ssid     = "xxxxx";   //your network SSID
 const char* password = "xxxxx";   //your network password
-
+//輸入AP端連線帳號密碼
 const char* apssid = "ESP32-CAM";
 const char* appassword = "12345678";         //AP端密碼至少要八個字元以上
 
