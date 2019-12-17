@@ -73,7 +73,7 @@ void ExecuteCommand()
   Serial.println("cmd= "+cmd+" ,P1= "+P1+" ,P2= "+P2+" ,P3= "+P3+" ,P4= "+P4+" ,P5= "+P5+" ,P6= "+P6+" ,P7= "+P7+" ,P8= "+P8+" ,P9= "+P9);    //http://192.168.xxx.xxx?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
   Serial.println("");
 
-  //自訂指令
+  //自訂指令區塊
   if (cmd=="your cmd") {
     // You can do anything
     // Feedback="<font color=\"red\">Hello World</font>";   //可為一般文字或HTML語法
