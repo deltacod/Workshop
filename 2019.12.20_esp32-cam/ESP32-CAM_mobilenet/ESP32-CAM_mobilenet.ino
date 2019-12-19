@@ -622,38 +622,42 @@ static esp_err_t cmd_handler(httpd_req_t *req){
 
 //顯示視訊參數狀態
 static esp_err_t status_handler(httpd_req_t *req){
-    static char response[1024];
+    static char json_response[1024];
 
     sensor_t * s = esp_camera_sensor_get();
-    char * p = response;
-    p+=sprintf(p, "framesize:%u<br>", s->status.framesize);
-    p+=sprintf(p, "quality:%u<br>", s->status.quality);
-    p+=sprintf(p, "brightness:%d<br>", s->status.brightness);
-    p+=sprintf(p, "contrast:%d<br>", s->status.contrast);
-    p+=sprintf(p, "saturation:%d<br>", s->status.saturation);
-    p+=sprintf(p, "special_effect:%u<br>", s->status.special_effect);
-    p+=sprintf(p, "wb_mode:%u<br>", s->status.wb_mode);
-    p+=sprintf(p, "awb:%u<br>", s->status.awb);
-    p+=sprintf(p, "awb_gain:%u<br>", s->status.awb_gain);
-    p+=sprintf(p, "aec:%u<br>", s->status.aec);
-    p+=sprintf(p, "aec2:%u<br>", s->status.aec2);
-    p+=sprintf(p, "ae_level:%d<br>", s->status.ae_level);
-    p+=sprintf(p, "aec_value:%u<br>", s->status.aec_value);
-    p+=sprintf(p, "agc:%u<br>", s->status.agc);
-    p+=sprintf(p, "agc_gain:%u<br>", s->status.agc_gain);
-    p+=sprintf(p, "gainceiling:%u<br>", s->status.gainceiling);
-    p+=sprintf(p, "bpc:%u<br>", s->status.bpc);
-    p+=sprintf(p, "wpc:%u<br>", s->status.wpc);
-    p+=sprintf(p, "raw_gma:%u<br>", s->status.raw_gma);
-    p+=sprintf(p, "lenc:%u<br>", s->status.lenc);
-    p+=sprintf(p, "vflip:%u<br>", s->status.vflip);
-    p+=sprintf(p, "hmirror:%u<br>", s->status.hmirror);
-    p+=sprintf(p, "dcw:%u<br>", s->status.dcw);
-    p+=sprintf(p, "colorbar:%u<br>", s->status.colorbar);
+    char * p = json_response;
+    *p++ = '{';
+
+    p+=sprintf(p, "\"framesize\":%u,", s->status.framesize);
+    p+=sprintf(p, "\"quality\":%u,", s->status.quality);
+    p+=sprintf(p, "\"brightness\":%d,", s->status.brightness);
+    p+=sprintf(p, "\"contrast\":%d,", s->status.contrast);
+    p+=sprintf(p, "\"saturation\":%d,", s->status.saturation);
+    p+=sprintf(p, "\"sharpness\":%d,", s->status.sharpness);
+    p+=sprintf(p, "\"special_effect\":%u,", s->status.special_effect);
+    p+=sprintf(p, "\"wb_mode\":%u,", s->status.wb_mode);
+    p+=sprintf(p, "\"awb\":%u,", s->status.awb);
+    p+=sprintf(p, "\"awb_gain\":%u,", s->status.awb_gain);
+    p+=sprintf(p, "\"aec\":%u,", s->status.aec);
+    p+=sprintf(p, "\"aec2\":%u,", s->status.aec2);
+    p+=sprintf(p, "\"ae_level\":%d,", s->status.ae_level);
+    p+=sprintf(p, "\"aec_value\":%u,", s->status.aec_value);
+    p+=sprintf(p, "\"agc\":%u,", s->status.agc);
+    p+=sprintf(p, "\"agc_gain\":%u,", s->status.agc_gain);
+    p+=sprintf(p, "\"gainceiling\":%u,", s->status.gainceiling);
+    p+=sprintf(p, "\"bpc\":%u,", s->status.bpc);
+    p+=sprintf(p, "\"wpc\":%u,", s->status.wpc);
+    p+=sprintf(p, "\"raw_gma\":%u,", s->status.raw_gma);
+    p+=sprintf(p, "\"lenc\":%u,", s->status.lenc);
+    p+=sprintf(p, "\"vflip\":%u,", s->status.vflip);
+    p+=sprintf(p, "\"hmirror\":%u,", s->status.hmirror);
+    p+=sprintf(p, "\"dcw\":%u,", s->status.dcw);
+    p+=sprintf(p, "\"colorbar\":%u", s->status.colorbar);
+    *p++ = '}';
     *p++ = 0;
-    httpd_resp_set_type(req, "text/html");
+    httpd_resp_set_type(req, "application/json");
     httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
-    return httpd_resp_send(req, response, strlen(response));
+    return httpd_resp_send(req, json_response, strlen(json_response));
 }
 
 //自訂網頁首頁管理介面
