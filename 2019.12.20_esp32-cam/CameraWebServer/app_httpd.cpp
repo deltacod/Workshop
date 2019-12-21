@@ -21,7 +21,9 @@
 #include "fd_forward.h"
 #include "fr_forward.h"
 
+//人臉辨識註冊人臉畫面捕捉張數
 #define ENROLL_CONFIRM_TIMES 5
+//人臉辨識最大註冊人數
 #define FACE_ID_SAVE_NUMBER 7
 
 #define FACE_COLOR_WHITE  0x00FFFFFF
@@ -185,23 +187,28 @@ static int run_face_recognition(dl_matrix3du_t *image_matrix, box_array_t *net_b
         } else {
             matched_id = recognize_face(&id_list, aligned_face);
             if (matched_id >= 0) {
+                //如果偵測到有註冊的人臉可在此區塊自訂人名或開門控制。
                 Serial.printf("Match Face ID: %u\n", matched_id);
-                rgb_printf(image_matrix, FACE_COLOR_GREEN, "Hello Subject %u", matched_id);
-                 /*
-                //偵測有人時可在此執行動作
-                if (matched_id==0) {
-                  rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] France", matched_id);
-                }
-                else if (matched_id==1) {
-                  rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] Mary", matched_id);
-                }                
+              
+                boolean state=false;  //state=true 時使用自訂人名
+                if (state==true) {
+                  if (matched_id==0) {
+                    rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] France", matched_id);
+                    //可增加指令控制伺服馬達轉動開門
+                  }
+                  else if (matched_id==1) {
+                    rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] Mary", matched_id);
+                  }                
+                  else
+                    rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] No Name", matched_id);
+                } 
                 else
-                  rgb_printf(image_matrix, FACE_COLOR_GREEN, "Hello Subject %u", matched_id);
-                */
+                  rgb_printf(image_matrix, FACE_COLOR_GREEN, "Hello matched_id %u", matched_id);
             } else {
                 Serial.println("No Match Found");
                 rgb_print(image_matrix, FACE_COLOR_RED, "Intruder Alert!");
                 matched_id = -1;
+                //可增加指令發出陌生人警示訊息
             }
         }
     } else {
@@ -225,6 +232,7 @@ static size_t jpg_encode_stream(void * arg, size_t index, const void* data, size
     return len;
 }
 
+//影像截圖  http://192.168.xxx.xxx/capture
 static esp_err_t capture_handler(httpd_req_t *req){
     camera_fb_t * fb = NULL;
     esp_err_t res = ESP_OK;
@@ -312,6 +320,7 @@ static esp_err_t capture_handler(httpd_req_t *req){
     return res;
 }
 
+//影像串流  http://192.168.xxx.xxx:81/stream
 static esp_err_t stream_handler(httpd_req_t *req){
     camera_fb_t * fb = NULL;
     esp_err_t res = ESP_OK;
@@ -459,11 +468,12 @@ static esp_err_t stream_handler(httpd_req_t *req){
     return res;
 }
 
+//指令參數控制  http://192.168.xxx.xxx/control?var=xxx&val=xxx
 static esp_err_t cmd_handler(httpd_req_t *req){
-    char*  buf;
+    char*  buf;  //存取網址後帶的參數字串
     size_t buf_len;
-    char variable[32] = {0,};
-    char value[32] = {0,};
+    char variable[32] = {0,};  //存取參數var值，可修改陣列長度。  char variable[128] = {0,};
+    char value[32] = {0,};  //存取參數val值，可修改陣列長度。  char value[128] = {0,};
 
     buf_len = httpd_req_get_url_query_len(req) + 1;
     if (buf_len > 1) {
@@ -491,6 +501,7 @@ static esp_err_t cmd_handler(httpd_req_t *req){
         return ESP_FAIL;
     }
 
+    //官方指令區塊
     int val = atoi(value);
     sensor_t * s = esp_camera_sensor_get();
     int res = 0;
@@ -534,6 +545,14 @@ static esp_err_t cmd_handler(httpd_req_t *req){
             detection_enabled = val;
         }
     }
+    /*
+    //可自訂指令 http://192.168.xxx.xxx/control?var=falsh&val=10
+    else if(!strcmp(variable, "flash")) {
+      ledcAttachPin(4, 4);  
+      ledcSetup(4, 5000, 8);      
+      ledcWrite(4,val);
+    }
+    */
     else {
         res = -1;
     }
@@ -546,6 +565,7 @@ static esp_err_t cmd_handler(httpd_req_t *req){
     return httpd_resp_send(req, NULL, 0);
 }
 
+//顯示視訊參數狀態  http://192.168.xxx.xxx/status
 static esp_err_t status_handler(httpd_req_t *req){
     static char json_response[1024];
 
@@ -588,6 +608,7 @@ static esp_err_t status_handler(httpd_req_t *req){
     return httpd_resp_send(req, json_response, strlen(json_response));
 }
 
+//自訂網頁首頁
 static const char PROGMEM INDEX_HTML[] = R"rawliteral(
 <!doctype html>
 <html>
@@ -1140,245 +1161,271 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(
                 </figure>
             </div>
         </section>
+        
         <script>
-document.addEventListener('DOMContentLoaded', function (event) {
-  var baseHost = document.location.origin
-  var streamUrl = baseHost + ':81'
-
-  const hide = el => {
-    el.classList.add('hidden')
-  }
-  const show = el => {
-    el.classList.remove('hidden')
-  }
-
-  const disable = el => {
-    el.classList.add('disabled')
-    el.disabled = true
-  }
-
-  const enable = el => {
-    el.classList.remove('disabled')
-    el.disabled = false
-  }
-
-  const updateValue = (el, value, updateRemote) => {
-    updateRemote = updateRemote == null ? true : updateRemote
-    let initialValue
-    if (el.type === 'checkbox') {
-      initialValue = el.checked
-      value = !!value
-      el.checked = value
-    } else {
-      initialValue = el.value
-      el.value = value
-    }
-
-    if (updateRemote && initialValue !== value) {
-      updateConfig(el);
-    } else if(!updateRemote){
-      if(el.id === "aec"){
-        value ? hide(exposure) : show(exposure)
-      } else if(el.id === "agc"){
-        if (value) {
-          show(gainCeiling)
-          hide(agcGain)
-        } else {
-          hide(gainCeiling)
-          show(agcGain)
-        }
-      } else if(el.id === "awb_gain"){
-        value ? show(wb) : hide(wb)
-      } else if(el.id === "face_recognize"){
-        value ? enable(enrollButton) : disable(enrollButton)
-      }
-    }
-  }
-
-  function updateConfig (el) {
-    let value
-    switch (el.type) {
-      case 'checkbox':
-        value = el.checked ? 1 : 0
-        break
-      case 'range':
-      case 'select-one':
-        value = el.value
-        break
-      case 'button':
-      case 'submit':
-        value = '1'
-        break
-      default:
-        return
-    }
-
-    const query = `${baseHost}/control?var=${el.id}&val=${value}`
-
-    fetch(query)
-      .then(response => {
-        console.log(`request to ${query} finished, status: ${response.status}`)
-      })
-  }
-
-  document
-    .querySelectorAll('.close')
-    .forEach(el => {
-      el.onclick = () => {
-        hide(el.parentNode)
-      }
-    })
-
-  // read initial values
-  fetch(`${baseHost}/status`)
-    .then(function (response) {
-      return response.json()
-    })
-    .then(function (state) {
-      document
-        .querySelectorAll('.default-action')
-        .forEach(el => {
-          updateValue(el, state[el.id], false)
-        })
-    })
-
-  const view = document.getElementById('stream')
-  const viewContainer = document.getElementById('stream-container')
-  const stillButton = document.getElementById('get-still')
-  const streamButton = document.getElementById('toggle-stream')
-  const enrollButton = document.getElementById('face_enroll')
-  const closeButton = document.getElementById('close-stream')
-
-  const stopStream = () => {
-    window.stop();
-    streamButton.innerHTML = 'Start Stream'
-  }
-
-  const startStream = () => {
-    view.src = `${streamUrl}/stream`
-    show(viewContainer)
-    streamButton.innerHTML = 'Stop Stream'
-  }
-
-  // Attach actions to buttons
-  stillButton.onclick = () => {
-    stopStream()
-    view.src = `${baseHost}/capture?_cb=${Date.now()}`
-    show(viewContainer)
-  }
-
-  closeButton.onclick = () => {
-    stopStream()
-    hide(viewContainer)
-  }
-
-  streamButton.onclick = () => {
-    const streamEnabled = streamButton.innerHTML === 'Stop Stream'
-    if (streamEnabled) {
-      stopStream()
-    } else {
-      startStream()
-    }
-  }
-
-  enrollButton.onclick = () => {
-    updateConfig(enrollButton)
-  }
-
-  // Attach default on change action
-  document
-    .querySelectorAll('.default-action')
-    .forEach(el => {
-      el.onchange = () => updateConfig(el)
-    })
-
-  // Custom actions
-  // Gain
-  const agc = document.getElementById('agc')
-  const agcGain = document.getElementById('agc_gain-group')
-  const gainCeiling = document.getElementById('gainceiling-group')
-  agc.onchange = () => {
-    updateConfig(agc)
-    if (agc.checked) {
-      show(gainCeiling)
-      hide(agcGain)
-    } else {
-      hide(gainCeiling)
-      show(agcGain)
-    }
-  }
-
-  // Exposure
-  const aec = document.getElementById('aec')
-  const exposure = document.getElementById('aec_value-group')
-  aec.onchange = () => {
-    updateConfig(aec)
-    aec.checked ? hide(exposure) : show(exposure)
-  }
-
-  // AWB
-  const awb = document.getElementById('awb_gain')
-  const wb = document.getElementById('wb_mode-group')
-  awb.onchange = () => {
-    updateConfig(awb)
-    awb.checked ? show(wb) : hide(wb)
-  }
-
-  // Detection and framesize
-  const detect = document.getElementById('face_detect')
-  const recognize = document.getElementById('face_recognize')
-  const framesize = document.getElementById('framesize')
-
-  framesize.onchange = () => {
-    updateConfig(framesize)
-    if (framesize.value > 5) {
-      updateValue(detect, false)
-      updateValue(recognize, false)
-    }
-  }
-
-  detect.onchange = () => {
-    if (framesize.value > 5) {
-      alert("Please select CIF or lower resolution before enabling this feature!");
-      updateValue(detect, false)
-      return;
-    }
-    updateConfig(detect)
-    if (!detect.checked) {
-      disable(enrollButton)
-      updateValue(recognize, false)
-    }
-  }
-
-  recognize.onchange = () => {
-    if (framesize.value > 5) {
-      alert("Please select CIF or lower resolution before enabling this feature!");
-      updateValue(recognize, false)
-      return;
-    }
-    updateConfig(recognize)
-    if (recognize.checked) {
-      enable(enrollButton)
-      updateValue(detect, true)
-    } else {
-      disable(enrollButton)
-    }
-  }
-})
+          document.addEventListener('DOMContentLoaded', function (event) {
+            var baseHost = document.location.origin
+            var streamUrl = baseHost + ':81'
+          
+            const hide = el => {
+              el.classList.add('hidden')
+            }
+            const show = el => {
+              el.classList.remove('hidden')
+            }
+          
+            const disable = el => {
+              el.classList.add('disabled')
+              el.disabled = true
+            }
+          
+            const enable = el => {
+              el.classList.remove('disabled')
+              el.disabled = false
+            }
+          
+            const updateValue = (el, value, updateRemote) => {
+              updateRemote = updateRemote == null ? true : updateRemote
+              let initialValue
+              if (el.type === 'checkbox') {
+                initialValue = el.checked
+                value = !!value
+                el.checked = value
+              } else {
+                initialValue = el.value
+                el.value = value
+              }
+          
+              if (updateRemote && initialValue !== value) {
+                updateConfig(el);
+              } else if(!updateRemote){
+                if(el.id === "aec"){
+                  value ? hide(exposure) : show(exposure)
+                } else if(el.id === "agc"){
+                  if (value) {
+                    show(gainCeiling)
+                    hide(agcGain)
+                  } else {
+                    hide(gainCeiling)
+                    show(agcGain)
+                  }
+                } else if(el.id === "awb_gain"){
+                  value ? show(wb) : hide(wb)
+                } else if(el.id === "face_recognize"){
+                  value ? enable(enrollButton) : disable(enrollButton)
+                }
+              }
+            }
+          
+            function updateConfig (el) {
+              let value
+              switch (el.type) {
+                case 'checkbox':
+                  value = el.checked ? 1 : 0
+                  break
+                case 'range':
+                case 'select-one':
+                  value = el.value
+                  break
+                case 'button':
+                case 'submit':
+                  value = '1'
+                  break
+                default:
+                  return
+              }
+          
+              const query = `${baseHost}/control?var=${el.id}&val=${value}`
+          
+              fetch(query)
+                .then(response => {
+                  console.log(`request to ${query} finished, status: ${response.status}`)
+                })
+            }
+          
+            document
+              .querySelectorAll('.close')
+              .forEach(el => {
+                el.onclick = () => {
+                  hide(el.parentNode)
+                }
+              })
+          
+            // read initial values
+            fetch(`${baseHost}/status`)
+              .then(function (response) {
+                return response.json()
+              })
+              .then(function (state) {
+                document
+                  .querySelectorAll('.default-action')
+                  .forEach(el => {
+                    updateValue(el, state[el.id], false)
+                  })
+              })
+          
+            const view = document.getElementById('stream')
+            const viewContainer = document.getElementById('stream-container')
+            const stillButton = document.getElementById('get-still')
+            const streamButton = document.getElementById('toggle-stream')
+            const enrollButton = document.getElementById('face_enroll')
+            const closeButton = document.getElementById('close-stream')
+          
+            const stopStream = () => {
+              window.stop();
+              streamButton.innerHTML = 'Start Stream'
+            }
+          
+            const startStream = () => {
+              view.src = `${streamUrl}/stream`
+              show(viewContainer)
+              streamButton.innerHTML = 'Stop Stream'
+            }
+          
+            // Attach actions to buttons
+            stillButton.onclick = () => {
+              stopStream()
+              view.src = `${baseHost}/capture?_cb=${Date.now()}`
+              show(viewContainer)
+            }
+          
+            closeButton.onclick = () => {
+              stopStream()
+              hide(viewContainer)
+            }
+          
+            streamButton.onclick = () => {
+              const streamEnabled = streamButton.innerHTML === 'Stop Stream'
+              if (streamEnabled) {
+                stopStream()
+              } else {
+                startStream()
+              }
+            }
+          
+            enrollButton.onclick = () => {
+              updateConfig(enrollButton)
+            }
+          
+            // Attach default on change action
+            document
+              .querySelectorAll('.default-action')
+              .forEach(el => {
+                el.onchange = () => updateConfig(el)
+              })
+          
+            // Custom actions
+            // Gain
+            const agc = document.getElementById('agc')
+            const agcGain = document.getElementById('agc_gain-group')
+            const gainCeiling = document.getElementById('gainceiling-group')
+            agc.onchange = () => {
+              updateConfig(agc)
+              if (agc.checked) {
+                show(gainCeiling)
+                hide(agcGain)
+              } else {
+                hide(gainCeiling)
+                show(agcGain)
+              }
+            }
+          
+            // Exposure
+            const aec = document.getElementById('aec')
+            const exposure = document.getElementById('aec_value-group')
+            aec.onchange = () => {
+              updateConfig(aec)
+              aec.checked ? hide(exposure) : show(exposure)
+            }
+          
+            // AWB
+            const awb = document.getElementById('awb_gain')
+            const wb = document.getElementById('wb_mode-group')
+            awb.onchange = () => {
+              updateConfig(awb)
+              awb.checked ? show(wb) : hide(wb)
+            }
+          
+            // Detection and framesize
+            const detect = document.getElementById('face_detect')
+            const recognize = document.getElementById('face_recognize')
+            const framesize = document.getElementById('framesize')
+          
+            framesize.onchange = () => {
+              updateConfig(framesize)
+              if (framesize.value > 5) {
+                updateValue(detect, false)
+                updateValue(recognize, false)
+              }
+            }
+          
+            detect.onchange = () => {
+              if (framesize.value > 5) {
+                alert("Please select CIF or lower resolution before enabling this feature!");
+                updateValue(detect, false)
+                return;
+              }
+              updateConfig(detect)
+              if (!detect.checked) {
+                disable(enrollButton)
+                updateValue(recognize, false)
+              }
+            }
+          
+            recognize.onchange = () => {
+              if (framesize.value > 5) {
+                alert("Please select CIF or lower resolution before enabling this feature!");
+                updateValue(recognize, false)
+                return;
+              }
+              updateConfig(recognize)
+              if (recognize.checked) {
+                enable(enrollButton)
+                updateValue(detect, true)
+              } else {
+                disable(enrollButton)
+              }
+            }
+          })
 
         </script>
     </body>
 </html>
 )rawliteral";
+//另一種寫法 static char INDEX_HTML[] = "<font color=\"red\">Hello World</font>";
 
+//網頁首頁  http://192.168.xxx.xxx
 static esp_err_t index_handler(httpd_req_t *req){
     httpd_resp_set_type(req, "text/html");
     return httpd_resp_send(req, (const char *)INDEX_HTML, strlen(INDEX_HTML));
 }
 
 void startCameraServer(){
-    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+/*
+#define HTTPD_DEFAULT_CONFIG() {                        \
+        .task_priority      = tskIDLE_PRIORITY+5,       \
+        .stack_size         = 4096,                     \
+        .server_port        = 80,                       \
+        .ctrl_port          = 32768,                    \
+        .max_open_sockets   = 7,                        \
+        .max_uri_handlers   = 8,                        \
+        .max_resp_headers   = 8,                        \
+        .backlog_conn       = 5,                        \
+        .lru_purge_enable   = false,                    \
+        .recv_wait_timeout  = 5,                        \
+        .send_wait_timeout  = 5,                        \
+        .global_user_ctx = NULL,                        \
+        .global_user_ctx_free_fn = NULL,                \
+        .global_transport_ctx = NULL,                   \
+        .global_transport_ctx_free_fn = NULL,           \
+        .open_fn = NULL,                                \
+        .close_fn = NULL,                               \
+} 
+*/
+    httpd_config_t config = HTTPD_DEFAULT_CONFIG();  //可在HTTPD_DEFAULT_CONFIG()中設定SERVER PORT 
 
+    //可自訂網址路徑對應執行的函式
+    //http://192.168.xxx.xxx/
     httpd_uri_t index_uri = {
         .uri       = "/",
         .method    = HTTP_GET,
@@ -1386,6 +1433,7 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
 
+    //http://192.168.xxx.xxx/status
     httpd_uri_t status_uri = {
         .uri       = "/status",
         .method    = HTTP_GET,
@@ -1393,6 +1441,7 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
 
+    //http://192.168.xxx.xxx/control
     httpd_uri_t cmd_uri = {
         .uri       = "/control",
         .method    = HTTP_GET,
@@ -1400,6 +1449,7 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
 
+    //http://192.168.xxx.xxx/capture
     httpd_uri_t capture_uri = {
         .uri       = "/capture",
         .method    = HTTP_GET,
@@ -1407,6 +1457,7 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
 
+   //http://192.168.xxx.xxx/stream
    httpd_uri_t stream_uri = {
         .uri       = "/stream",
         .method    = HTTP_GET,
@@ -1441,8 +1492,8 @@ void startCameraServer(){
         httpd_register_uri_handler(camera_httpd, &capture_uri);
     }
 
-    config.server_port += 1;
-    config.ctrl_port += 1;
+    config.server_port += 1;  //TCP Port
+    config.ctrl_port += 1;  //UDP Port
     Serial.printf("Starting stream server on port: '%d'\n", config.server_port);
     if (httpd_start(&stream_httpd, &config) == ESP_OK) {
         httpd_register_uri_handler(stream_httpd, &stream_uri);
