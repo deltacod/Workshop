@@ -1,5 +1,5 @@
 /*
-ESP32-CAM CameraWebServer
+ESP32-CAM CameraWebServer (Facial recognition)
 Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-22 01:30
 https://www.facebook.com/francefu
 
