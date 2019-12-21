@@ -1508,7 +1508,7 @@ void startCameraServer(){
     
     face_id_init(&id_list, FACE_ID_SAVE_NUMBER, ENROLL_CONFIRM_TIMES);
     
-    Serial.printf("Starting web server on port: '%d'\n", config.server_port);
+    Serial.printf("Starting web server on port: '%d'\n", config.server_port);  //TCP Port
     if (httpd_start(&camera_httpd, &config) == ESP_OK) {
         //註冊自訂網址路徑對應執行的函式
         httpd_register_uri_handler(camera_httpd, &index_uri);
@@ -1517,7 +1517,7 @@ void startCameraServer(){
         httpd_register_uri_handler(camera_httpd, &capture_uri);
     }
 
-    config.server_port += 1;  //TCP Port
+    config.server_port += 1;  //S Port
     config.ctrl_port += 1;  //UDP Port
     Serial.printf("Starting stream server on port: '%d'\n", config.server_port);
     if (httpd_start(&stream_httpd, &config) == ESP_OK) {
