@@ -49,10 +49,6 @@ http://192.168.xxx.xxx/control?var=lenc&val=value    // value = 0 or 1
 http://192.168.xxx.xxx/control?var=special_effect&val=value    // value = 0 ~ 6
 http://192.168.xxx.xxx/control?var=wb_mode&val=value    // value = 0 ~ 4
 http://192.168.xxx.xxx/control?var=ae_level&val=value    // value = -2 ~ 2  
-      
-查詢Client端IP：
-查詢IP：http://192.168.xxx.xxx/?ip
-重設網路：http://192.168.xxx.xxx/?resetwifi=ssid;password
 */
 
 //輸入WIFI連線帳號密碼
