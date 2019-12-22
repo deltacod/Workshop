@@ -1,5 +1,6 @@
 /*
-ESP32-CAM mobilenet (Open the page in Chrome.)
+ESP32-CAM mobilenet
+Open the page in Chrome.
 Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-22 12:00
 https://www.facebook.com/francefu
 
@@ -15,7 +16,7 @@ http://192.168.xxx.xxx/control?ip
 http://192.168.xxx.xxx/control?mac
 http://192.168.xxx.xxx/control?restart
 http://192.168.xxx.xxx/control?resetwifi=ssid;password
-http://192.168.xxx.xxx/control?flash=value        //vale= 0~255
+http://192.168.xxx.xxx/control?flash=value        //value= 0~255
 
 查詢Client端IP：
 查詢IP：http://192.168.4.1/?ip
