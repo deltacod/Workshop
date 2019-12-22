@@ -8,19 +8,19 @@ http://APIP/?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 http://STAIP/?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 
 預設AP端IP： 192.168.4.1
-http://192.168.4.1/?ip
-http://192.168.4.1/?mac
-http://192.168.4.1/?restart
-http://192.168.4.1/?resetwifi=ssid;password
-http://192.168.4.1/?flash=value        //vale= 0~255
+http://192.168.xxx.xxx/?ip
+http://192.168.xxx.xxx/?mac
+http://192.168.xxx.xxx/?restart
+http://192.168.xxx.xxx/?resetwifi=ssid;password
+http://192.168.xxx.xxx/?flash=value        //vale= 0~255
 
 查詢Client端IP：
 查詢IP：http://192.168.4.1/?ip
 重設網路：http://192.168.4.1/?resetwifi=ssid;password
 
 如果想快速執行指令不需等待回傳值，可在命令中增加參數值為stop。例如：
-http://192.168.4.1/?digitalwrite=gpio;value;stop
-http://192.168.4.1/?restart=stop
+http://192.168.xxx.xxx/?digitalwrite=gpio;value;stop
+http://192.168.xxx.xxx/?restart=stop
 */
 
 //輸入WIFI連線帳號密碼
@@ -315,7 +315,7 @@ void loop() {
         }
 
         if ((currentLine.indexOf("/?")!=-1)&&(currentLine.indexOf(" HTTP")!=-1)) {
-          if (Command.indexOf("stop")!=-1) {  //若指令中含關鍵字stop立即斷線 -> http://192.168.4.1/?cmd=aaa;bbb;ccc;stop
+          if (Command.indexOf("stop")!=-1) {  //若指令中含關鍵字stop立即斷線 -> http://192.168.xxx.xxx/?cmd=aaa;bbb;ccc;stop
             client.println();
             client.println();
             client.stop();
