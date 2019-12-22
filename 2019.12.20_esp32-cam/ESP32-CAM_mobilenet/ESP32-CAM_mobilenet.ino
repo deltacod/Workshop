@@ -1,53 +1,56 @@
 /*
-ESP32-CAM mobilenet
-Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-20 00:00
+ESP32-CAM mobilenet (Open the page in Chrome.)
+Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-22 12:00
 https://www.facebook.com/francefu
+
+可辨識物件列表
+https://github.com/tensorflow/tfjs-models/blob/master/mobilenet/src/imagenet_classes.ts
 
 自訂指令格式 :  
 http://APIP/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 http://STAIP/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 
-預設AP端IP： 192.168.4.1
-http://192.168.4.1/control?ip
-http://192.168.4.1/control?mac
-http://192.168.4.1/control?restart
-http://192.168.4.1/control?resetwifi=ssid;password
-http://192.168.4.1/control?flash=value        //vale= 0~255
+預設AP端IP： 192.168.xxx.xxx
+http://192.168.xxx.xxx/control?ip
+http://192.168.xxx.xxx/control?mac
+http://192.168.xxx.xxx/control?restart
+http://192.168.xxx.xxx/control?resetwifi=ssid;password
+http://192.168.xxx.xxx/control?flash=value        //vale= 0~255
 
-http://192.168.4.1             //網頁首頁管理介面
-http://192.168.4.1:81/stream   //取得串流影像
-http://192.168.4.1/capture     //取得影像
-http://192.168.4.1/status      //取得狀態設定值
+http://192.168.xxx.xxx             //網頁首頁管理介面
+http://192.168.xxx.xxx:81/stream   //取得串流影像
+http://192.168.xxx.xxx/capture     //取得影像
+http://192.168.xxx.xxx/status      //取得視訊參數值
 
 //設定視訊參數
-http://192.168.4.1/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
-http://192.168.4.1/control?var=quality&val=value    // value = 10 ~ 63
-http://192.168.4.1/control?var=brightness&val=value    // value = -2 ~ 2
-http://192.168.4.1/control?var=contrast&val=value    // value = -2 ~ 2
-http://192.168.4.1/control?var=saturation&val=value    // value = -2 ~ 2 
-http://192.168.4.1/control?var=gainceiling&val=value    // value = 0 ~ 6
-http://192.168.4.1/control?var=colorbar&val=value    // value = 0 or 1
-http://192.168.4.1/control?var=awb&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=agc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=aec&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=hmirror&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=vflip&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=awb_gain&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=agc_gain&val=value    // value = 0 ~ 30
-http://192.168.4.1/control?var=aec_value&val=value    // value = 0 ~ 1200
-http://192.168.4.1/control?var=aec2&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=dcw&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=bpc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=wpc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=raw_gma&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=lenc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=special_effect&val=value    // value = 0 ~ 6
-http://192.168.4.1/control?var=wb_mode&val=value    // value = 0 ~ 4
-http://192.168.4.1/control?var=ae_level&val=value    // value = -2 ~ 2  
+http://192.168.xxx.xxx/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
+http://192.168.xxx.xxx/control?var=quality&val=value    // value = 10 ~ 63
+http://192.168.xxx.xxx/control?var=brightness&val=value    // value = -2 ~ 2
+http://192.168.xxx.xxx/control?var=contrast&val=value    // value = -2 ~ 2
+http://192.168.xxx.xxx/control?var=saturation&val=value    // value = -2 ~ 2 
+http://192.168.xxx.xxx/control?var=gainceiling&val=value    // value = 0 ~ 6
+http://192.168.xxx.xxx/control?var=colorbar&val=value    // value = 0 or 1
+http://192.168.xxx.xxx/control?var=awb&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=agc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=aec&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=hmirror&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=vflip&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=awb_gain&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=agc_gain&val=value    // value = 0 ~ 30
+http://192.168.xxx.xxx/control?var=aec_value&val=value    // value = 0 ~ 1200
+http://192.168.xxx.xxx/control?var=aec2&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=dcw&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=bpc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=wpc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=raw_gma&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=lenc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=special_effect&val=value    // value = 0 ~ 6
+http://192.168.xxx.xxx/control?var=wb_mode&val=value    // value = 0 ~ 4
+http://192.168.xxx.xxx/control?var=ae_level&val=value    // value = -2 ~ 2  
       
 查詢Client端IP：
-查詢IP：http://192.168.4.1/?ip
-重設網路：http://192.168.4.1/?resetwifi=ssid;password
+查詢IP：http://192.168.xxx.xxx/?ip
+重設網路：http://192.168.xxx.xxx/?resetwifi=ssid;password
 */
 
 //輸入WIFI連線帳號密碼
@@ -660,7 +663,7 @@ static esp_err_t status_handler(httpd_req_t *req){
     return httpd_resp_send(req, json_response, strlen(json_response));
 }
 
-//自訂網頁首頁管理介面
+//自訂網頁首頁
 static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
 <html>
     <head>
@@ -683,6 +686,7 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
                 <tr><td colspan="3"><button id="get-still" style="display:none">Restart</button></td><td style="display:none"><button id="toggle-stream"></button></td><td></td></tr>
                 <tr><td>Flash</td><td align="center" colspan="2"><input type="range" id="flash" min="0" max="255" value="0" onchange="try{fetch(document.location.origin+'/control?flash='+this.value);}catch(e){}"></td></tr>
                 <tr><td colspan="3"><canvas id="canvas" width="0" height="0"></canvas></td></tr>
+                <tr style="display:none"><td colspan="3"><iframe id="ifr"></iframe></td></tr>
                 </table>
             </section>
             <figure>
@@ -1049,7 +1053,9 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
     var ShowImage = document.getElementById('stream');
     var context = canvas.getContext("2d");  
     var result = document.getElementById('result');
+    var ifr = document.getElementById('ifr');
     var Model;
+    
     function ObjectDetect() {
       result.innerHTML = "Please wait for loading model.";
       mobilenet.load().then(mobilenet_Model => {
@@ -1066,6 +1072,14 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
           result.innerHTML = "";
           for (var i=0;i<Predictions.length;i++) {
             result.innerHTML+= "[ "+i+" ] "+Math.round(Predictions[i].probability*100)+"%, "+Predictions[i].className+"<br>";
+            /*
+              //可在此依辨識結果Predictions[i].className與機率值Predictions[i].probability執行對應網址指令回傳ESP32-CAM
+              //https://github.com/tensorflow/tfjs-models/blob/master/mobilenet/src/imagenet_classes.ts
+              if (Predictions[i].probability>=0.2&&Predictions[i].className=="television, television system") {
+                console.log(Predictions[i].className+" is detected.");
+                ifr.src = document.location.origin+'/control?flash=10';  //http://192.168.xxx.xxx/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
+              }                  
+            */          
           }
         }
         else
@@ -1142,7 +1156,7 @@ void startCameraServer(){
   
   ra_filter_init(&ra_filter, 20);
   
-  Serial.printf("Starting web server on port: '%d'\n", config.server_port);
+  Serial.printf("Starting web server on port: '%d'\n", config.server_port);  //Server Port
   if (httpd_start(&camera_httpd, &config) == ESP_OK) {
       httpd_register_uri_handler(camera_httpd, &index_uri);
       httpd_register_uri_handler(camera_httpd, &cmd_uri);
@@ -1150,8 +1164,8 @@ void startCameraServer(){
       httpd_register_uri_handler(camera_httpd, &capture_uri);
   }
   
-  config.server_port += 1;
-  config.ctrl_port += 1;
+  config.server_port += 1;  //Stream Port
+  config.ctrl_port += 1;    //UDP Port
   Serial.printf("Starting stream server on port: '%d'\n", config.server_port);
   if (httpd_start(&stream_httpd, &config) == ESP_OK) {
       httpd_register_uri_handler(stream_httpd, &stream_uri);
