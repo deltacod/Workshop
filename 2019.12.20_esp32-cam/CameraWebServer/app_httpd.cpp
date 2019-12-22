@@ -211,14 +211,14 @@ static int run_face_recognition(dl_matrix3du_t *image_matrix, box_array_t *net_b
         } else {
             matched_id = recognize_face(&id_list, aligned_face);
             if (matched_id >= 0) {
-                //如果偵測到有註冊的人臉可在此區塊自訂人名或開門控制。
+                //如果偵測到有註冊的人臉可在此區塊自訂顯示人名與開門控制。
                 Serial.printf("Match Face ID: %u\n", matched_id);
               
                 boolean state=false;  //state=true 時使用自訂人名
                 if (state==true) {
+                  //可在此控制伺服馬達轉動開門
                   if (matched_id==0) {
                     rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] France", matched_id);
-                    //可增加指令控制伺服馬達轉動開門
                   }
                   else if (matched_id==1) {
                     rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] Mary", matched_id);
