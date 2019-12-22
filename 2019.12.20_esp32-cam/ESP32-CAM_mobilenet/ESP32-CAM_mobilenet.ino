@@ -10,12 +10,16 @@ https://github.com/tensorflow/tfjs-models/blob/master/mobilenet/src/imagenet_cla
 http://APIP/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 http://STAIP/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 
-預設AP端IP： 192.168.xxx.xxx
+預設AP端IP： 192.168.4.1
 http://192.168.xxx.xxx/control?ip
 http://192.168.xxx.xxx/control?mac
 http://192.168.xxx.xxx/control?restart
 http://192.168.xxx.xxx/control?resetwifi=ssid;password
 http://192.168.xxx.xxx/control?flash=value        //vale= 0~255
+
+查詢Client端IP：
+查詢IP：http://192.168.4.1/?ip
+重設網路：http://192.168.4.1/?resetwifi=ssid;password
 
 http://192.168.xxx.xxx             //網頁首頁管理介面
 http://192.168.xxx.xxx:81/stream   //取得串流影像
