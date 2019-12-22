@@ -1,5 +1,6 @@
 /*
 ESP32-CAM BodyPix
+Open the page in Chrome.
 Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-19 19:00
 https://www.facebook.com/francefu
 
