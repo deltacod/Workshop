@@ -1,5 +1,5 @@
 /*
-ESP32-CAM DeepLab
+ESP32-CAM DeepLab V3
 Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-19 21:00
 https://www.facebook.com/francefu
 
@@ -17,7 +17,7 @@ http://192.168.4.1/control?flash=value        //vale= 0~255
 http://192.168.4.1             //網頁首頁管理介面
 http://192.168.4.1:81/stream   //取得串流影像
 http://192.168.4.1/capture     //取得影像
-http://192.168.4.1/status      //取得狀態設定值
+http://192.168.4.1/status      //取得視訊參數值
 
 //設定視訊參數
 http://192.168.4.1/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
@@ -688,7 +688,7 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
               <div id="stream-container" class="image-container hidden">
                 <div class="close" id="close-stream">×</div>
                 <img id="stream" src="" style="display:none">
-                <canvas id="canvas" width="0" height="0"></canvas><div id="legendList"></div>
+                <canvas id="canvas" width="0" height="0"></canvas><div id="legendList"></div><br><br>
               </div>
             </figure>             
             <div id="logo">
@@ -1055,6 +1055,7 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
       var Model;
       
       function ObjectDetect() {
+        result.innerHTML = "Please wait for loading model.";
         const modelName = 'pascal';   // set to your preferred model, either `pascal`, `cityscapes` or `ade20k`
         const quantizationBytes = 2;  // either 1, 2 or 4
         deeplab.load({base: modelName, quantizationBytes}).then(deeplab_model => {
@@ -1169,16 +1170,17 @@ void startCameraServer(){
   
   ra_filter_init(&ra_filter, 20);
   
-  Serial.printf("Starting web server on port: '%d'\n", config.server_port);
+  Serial.printf("Starting web server on port: '%d'\n", config.server_port);  //Server Port
   if (httpd_start(&camera_httpd, &config) == ESP_OK) {
+      //註冊網址路徑執行函式
       httpd_register_uri_handler(camera_httpd, &index_uri);
       httpd_register_uri_handler(camera_httpd, &cmd_uri);
       httpd_register_uri_handler(camera_httpd, &status_uri);
       httpd_register_uri_handler(camera_httpd, &capture_uri);
   }
   
-  config.server_port += 1;
-  config.ctrl_port += 1;
+  config.server_port += 1;  //Stream Port
+  config.ctrl_port += 1;    //UDP Port
   Serial.printf("Starting stream server on port: '%d'\n", config.server_port);
   if (httpd_start(&stream_httpd, &config) == ESP_OK) {
       httpd_register_uri_handler(stream_httpd, &stream_uri);
