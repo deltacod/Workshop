@@ -1,49 +1,53 @@
 /*
 ESP32-CAM People Tracking (tfjs coco-ssd)
-Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-19 20:00
+Open the page in Chrome.
+Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-22 21:00
 https://www.facebook.com/francefu
+
+Servo1(水平旋轉) -> gpio2 (伺服馬達與ESP32-CAM共地外接電源)
+Servo2(垂直旋轉) -> gpio13 (伺服馬達與ESP32-CAM共地外接電源)
 
 自訂指令格式 :  
 http://APIP/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 http://STAIP/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 
 預設AP端IP： 192.168.4.1
-http://192.168.4.1/control?ip
-http://192.168.4.1/control?mac
-http://192.168.4.1/control?restart
-http://192.168.4.1/control?resetwifi=ssid;password
-http://192.168.4.1/control?flash=value        //vale= 0~255
+http://192.168.xxx.xxx/control?ip
+http://192.168.xxx.xxx/control?mac
+http://192.168.xxx.xxx/control?restart
+http://192.168.xxx.xxx/control?resetwifi=ssid;password
+http://192.168.xxx.xxx/control?flash=value        //vale= 0~255
 
-http://192.168.4.1             //網頁首頁管理介面
-http://192.168.4.1:81/stream   //取得串流影像
-http://192.168.4.1/capture     //取得影像
-http://192.168.4.1/status      //取得狀態設定值
+http://192.168.xxx.xxx             //網頁首頁管理介面
+http://192.168.xxx.xxx:81/stream   //取得串流影像
+http://192.168.xxx.xxx/capture     //取得影像
+http://192.168.xxx.xxx/status      //取得視訊參數值
 
 //設定視訊參數
-http://192.168.4.1/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
-http://192.168.4.1/control?var=quality&val=value    // value = 10 ~ 63
-http://192.168.4.1/control?var=brightness&val=value    // value = -2 ~ 2
-http://192.168.4.1/control?var=contrast&val=value    // value = -2 ~ 2
-http://192.168.4.1/control?var=saturation&val=value    // value = -2 ~ 2 
-http://192.168.4.1/control?var=gainceiling&val=value    // value = 0 ~ 6
-http://192.168.4.1/control?var=colorbar&val=value    // value = 0 or 1
-http://192.168.4.1/control?var=awb&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=agc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=aec&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=hmirror&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=vflip&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=awb_gain&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=agc_gain&val=value    // value = 0 ~ 30
-http://192.168.4.1/control?var=aec_value&val=value    // value = 0 ~ 1200
-http://192.168.4.1/control?var=aec2&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=dcw&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=bpc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=wpc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=raw_gma&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=lenc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=special_effect&val=value    // value = 0 ~ 6
-http://192.168.4.1/control?var=wb_mode&val=value    // value = 0 ~ 4
-http://192.168.4.1/control?var=ae_level&val=value    // value = -2 ~ 2  
+http://192.168.xxx.xxx/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
+http://192.168.xxx.xxx/control?var=quality&val=value    // value = 10 ~ 63
+http://192.168.xxx.xxx/control?var=brightness&val=value    // value = -2 ~ 2
+http://192.168.xxx.xxx/control?var=contrast&val=value    // value = -2 ~ 2
+http://192.168.xxx.xxx/control?var=saturation&val=value    // value = -2 ~ 2 
+http://192.168.xxx.xxx/control?var=gainceiling&val=value    // value = 0 ~ 6
+http://192.168.xxx.xxx/control?var=colorbar&val=value    // value = 0 or 1
+http://192.168.xxx.xxx/control?var=awb&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=agc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=aec&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=hmirror&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=vflip&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=awb_gain&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=agc_gain&val=value    // value = 0 ~ 30
+http://192.168.xxx.xxx/control?var=aec_value&val=value    // value = 0 ~ 1200
+http://192.168.xxx.xxx/control?var=aec2&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=dcw&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=bpc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=wpc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=raw_gma&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=lenc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=special_effect&val=value    // value = 0 ~ 6
+http://192.168.xxx.xxx/control?var=wb_mode&val=value    // value = 0 ~ 4
+http://192.168.xxx.xxx/control?var=ae_level&val=value    // value = -2 ~ 2  
       
 查詢Client端IP：
 查詢IP：http://192.168.4.1/?ip
@@ -59,13 +63,13 @@ const char* apssid = "ESP32-CAM";
 const char* appassword = "12345678";         //AP password require at least 8 characters.
 
 #include <WiFi.h>
-#include <esp32-hal-ledc.h>      //用於控制伺服馬達
-int angle1Value1 = 4850;
-int angle1Value2 = 4850;
 #include "esp_camera.h"          //視訊
 #include "Base64.h"              //用於轉換視訊影像格式為base64格式，易於上傳google雲端硬碟或資料庫
 #include "soc/soc.h"             //用於電源不穩不重開機 
 #include "soc/rtc_cntl_reg.h"    //用於電源不穩不重開機 
+#include <esp32-hal-ledc.h>      //用於控制伺服馬達
+int angle1Value1 = 4850;         //
+int angle1Value2 = 4850;
 
 //官方函式庫
 #include "esp_http_server.h"
@@ -684,7 +688,7 @@ static esp_err_t status_handler(httpd_req_t *req){
     return httpd_resp_send(req, json_response, strlen(json_response));
 }
 
-//自訂網頁首頁管理介面
+//自訂網頁首頁
 static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
 <html>
     <head>
@@ -1105,8 +1109,7 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
       Model.detect(canvas).then(Predictions => {
         var s = (ShowImage.width>ShowImage.height)?ShowImage.width:ShowImage.height;
         var score = Number(document.getElementById("score").value);
-        console.log(score);
-        var trackState = 0;
+        var trackState = 0;  //是否已偵測到人
         var x, y, width, height;
         //console.log('Predictions: ', Predictions);
         if (Predictions.length>0) {
@@ -1127,15 +1130,16 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
             context.fillText(Predictions[i].class, x, y);
             //context.fillText(i, x, y);
             result.innerHTML+= "[ "+i+" ] "+Predictions[i].class+", "+Math.round(Predictions[i].score*100)+"%, "+Math.round(x)+", "+Math.round(y)+", "+Math.round(width)+", "+Math.round(height)+"<br>";
-            
+
+            //可在此區塊執行追蹤，控制雙軸平台伺服馬達。
             //https://github.com/tensorflow/tfjs-models/blob/master/coco-ssd/src/classes.ts
             if (Predictions[i].class=="person"&&Predictions[i].score>=score&&trackState==0) {   
               try{
-                trackState = 1;
+                trackState = 1;  //只偵測第一人
                 
-                var midX = Math.round(x)+Math.round(width)/2;
-                if (midX>(40+320/2)) {
-                  if (midX>260) {
+                var midX = Math.round(x)+Math.round(width)/2;  //取偵測到第一人的區域水平中點X值
+                if (midX>(40+320/2)) {  //畫面中心自訂水平小區域中即使偏右不轉動
+                  if (midX>260) {  //區分距離畫面中點偏右程度
                     if (mirrorimage==1) {angle1Value1-=350;}else{angle1Value1+=350;}
                   } else {
                     if (mirrorimage==1) {angle1Value1-=175;}else{angle1Value1+=175;}
@@ -1144,8 +1148,8 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
                   if (angle1Value1 < 2050) angle1Value1 = 2050;
                   ifr.src = document.location.origin+'/control?servo1='+angle1Value1; 
                 }
-                else if (midX<(320/2)-40) {
-                  if (midX<60) {
+                else if (midX<(320/2)-40) {  //畫面中心自訂水平小區域中即使偏左不轉動
+                  if (midX<60) {  //區分距離畫面中點偏左程度
                     if (mirrorimage==1) {angle1Value1+=350;}else{angle1Value1-=350;}
                   } else {
                     if (mirrorimage==1) {angle1Value1+=175;}else{angle1Value1-=175;}
@@ -1155,9 +1159,9 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
                   ifr.src = document.location.origin+'/control?servo1='+angle1Value1;  
                 }
                   
-                var midY = Math.round(y)+Math.round(height)/2;
-                if (midY>(240/2+30)) {
-                  if (midY>195) {
+                var midY = Math.round(y)+Math.round(height)/2;  //取偵測到第一人的區域垂直中點Y值
+                if (midY>(240/2+30)) {  //畫面中心自訂小區域中即使偏下不轉動
+                  if (midY>195) {  //區分距離畫面中點偏下程度
                     angle1Value2-=300;
                   } else {
                     angle1Value2-=150; 
@@ -1166,8 +1170,8 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
                   if (angle1Value2 < 2050) angle1Value2 = 2050;                  
                   ifr.src = document.location.origin+'/control?servo2='+angle1Value2; 
                 }
-                else if (midY<(240/2)-30) {
-                  if (midY<45) {
+                else if (midY<(240/2)-30) {  //畫面中心自訂小區域中即使偏上不轉動
+                  if (midY<45) {  //區分距離畫面中點偏上程度
                     angle1Value2+=300;
                   } else {
                     angle1Value2+=150;   
@@ -1183,7 +1187,7 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
         }
         else
           result.innerHTML = "Unrecognizable";
-        setTimeout(function(){getStill.click();},1000);
+        setTimeout(function(){getStill.click();},500);
       });   
     }
     ShowImage.onload = function (event) {
@@ -1193,7 +1197,7 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
           setTimeout(function(){DetectImage();},250);
         }
         catch(e) { 
-          DetectImage();
+          setTimeout(function(){DetectImage();},150);
         } 
       }
     }
@@ -1255,7 +1259,7 @@ void startCameraServer(){
   
   ra_filter_init(&ra_filter, 20);
   
-  Serial.printf("Starting web server on port: '%d'\n", config.server_port);
+  Serial.printf("Starting web server on port: '%d'\n", config.server_port);  //Server Port
   if (httpd_start(&camera_httpd, &config) == ESP_OK) {
       httpd_register_uri_handler(camera_httpd, &index_uri);
       httpd_register_uri_handler(camera_httpd, &cmd_uri);
@@ -1263,8 +1267,8 @@ void startCameraServer(){
       httpd_register_uri_handler(camera_httpd, &capture_uri);
   }
   
-  config.server_port += 1;
-  config.ctrl_port += 1;
+  config.server_port += 1;  //Stream Port
+  config.ctrl_port += 1;    //UDP Port
   Serial.printf("Starting stream server on port: '%d'\n", config.server_port);
   if (httpd_start(&stream_httpd, &config) == ESP_OK) {
       httpd_register_uri_handler(stream_httpd, &stream_uri);
