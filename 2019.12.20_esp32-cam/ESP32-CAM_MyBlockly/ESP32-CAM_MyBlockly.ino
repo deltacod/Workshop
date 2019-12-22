@@ -12,7 +12,7 @@ http://192.168.xxx.xxx/?ip
 http://192.168.xxx.xxx/?mac
 http://192.168.xxx.xxx/?restart
 http://192.168.xxx.xxx/?resetwifi=ssid;password
-http://192.168.xxx.xxx/?flash=value        //vale= 0~255
+http://192.168.xxx.xxx/?flash=value        //value= 0~255
 
 查詢Client端IP：
 查詢IP：http://192.168.4.1/?ip
