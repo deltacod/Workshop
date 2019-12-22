@@ -1,6 +1,7 @@
 /*
-ESP32-CAM MULTI-PERSON POSE Estimation (Control Relay)
-Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-20 00:00
+ESP32-CAM MULTI-PERSON POSE Estimation
+Open the page in Chrome.
+Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-22 21:00
 https://www.facebook.com/francefu
 
 打開: 兩手分別在兩耳旁.
@@ -8,7 +9,6 @@ https://www.facebook.com/francefu
 
 繼電器: gpio2
 
-請在Chrome中開啟網頁才能載入tfjs模組.
 示範影片
 https://www.youtube.com/watch?v=0v-ZWXZSndA
 
@@ -17,51 +17,51 @@ http://APIP/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 http://STAIP/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 
 預設AP端IP： 192.168.4.1
-http://192.168.4.1/control?ip
-http://192.168.4.1/control?mac
-http://192.168.4.1/control?restart
-http://192.168.4.1/control?resetwifi=ssid;password
-http://192.168.4.1/control?flash=value        //vale= 0~255
-
-http://192.168.4.1             //網頁首頁管理介面
-http://192.168.4.1:81/stream   //取得串流影像
-http://192.168.4.1/capture     //取得影像
-http://192.168.4.1/status      //取得狀態設定值
-
-//設定視訊參數
-http://192.168.4.1/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
-http://192.168.4.1/control?var=quality&val=value    // value = 10 ~ 63
-http://192.168.4.1/control?var=brightness&val=value    // value = -2 ~ 2
-http://192.168.4.1/control?var=contrast&val=value    // value = -2 ~ 2
-http://192.168.4.1/control?var=saturation&val=value    // value = -2 ~ 2 
-http://192.168.4.1/control?var=gainceiling&val=value    // value = 0 ~ 6
-http://192.168.4.1/control?var=colorbar&val=value    // value = 0 or 1
-http://192.168.4.1/control?var=awb&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=agc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=aec&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=hmirror&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=vflip&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=awb_gain&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=agc_gain&val=value    // value = 0 ~ 30
-http://192.168.4.1/control?var=aec_value&val=value    // value = 0 ~ 1200
-http://192.168.4.1/control?var=aec2&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=dcw&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=bpc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=wpc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=raw_gma&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=lenc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=special_effect&val=value    // value = 0 ~ 6
-http://192.168.4.1/control?var=wb_mode&val=value    // value = 0 ~ 4
-http://192.168.4.1/control?var=ae_level&val=value    // value = -2 ~ 2  
-      
+http://192.168.xxx.xxx/control?ip
+http://192.168.xxx.xxx/control?mac
+http://192.168.xxx.xxx/control?restart
+http://192.168.xxx.xxx/control?resetwifi=ssid;password
+http://192.168.xxx.xxx/control?flash=value        //value= 0~255
+  
 查詢Client端IP：
 查詢IP：http://192.168.4.1/?ip
 重設網路：http://192.168.4.1/?resetwifi=ssid;password
+
+http://192.168.xxx.xxx             //網頁首頁管理介面
+http://192.168.xxx.xxx:81/stream   //取得串流影像
+http://192.168.xxx.xxx/capture     //取得影像
+http://192.168.xxx.xxx/status      //取得視訊參數值
+
+//設定視訊參數
+http://192.168.xxx.xxx/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
+http://192.168.xxx.xxx/control?var=quality&val=value    // value = 10 ~ 63
+http://192.168.xxx.xxx/control?var=brightness&val=value    // value = -2 ~ 2
+http://192.168.xxx.xxx/control?var=contrast&val=value    // value = -2 ~ 2
+http://192.168.xxx.xxx/control?var=saturation&val=value    // value = -2 ~ 2 
+http://192.168.xxx.xxx/control?var=gainceiling&val=value    // value = 0 ~ 6
+http://192.168.xxx.xxx/control?var=colorbar&val=value    // value = 0 or 1
+http://192.168.xxx.xxx/control?var=awb&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=agc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=aec&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=hmirror&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=vflip&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=awb_gain&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=agc_gain&val=value    // value = 0 ~ 30
+http://192.168.xxx.xxx/control?var=aec_value&val=value    // value = 0 ~ 1200
+http://192.168.xxx.xxx/control?var=aec2&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=dcw&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=bpc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=wpc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=raw_gma&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=lenc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=special_effect&val=value    // value = 0 ~ 6
+http://192.168.xxx.xxx/control?var=wb_mode&val=value    // value = 0 ~ 4
+http://192.168.xxx.xxx/control?var=ae_level&val=value    // value = -2 ~ 2  
 */
 
 //輸入WIFI連線帳號密碼
-const char* ssid     = "*****";   //your network SSID
-const char* password = "*****";   //your network password
+const char* ssid     = "xxxxx";   //your network SSID
+const char* password = "xxxxx";   //your network password
 
 //輸入AP端連線帳號密碼
 const char* apssid = "ESP32-CAM";
@@ -70,6 +70,7 @@ const char* appassword = "12345678";         //AP password require at least 8 ch
 #include <WiFi.h>
 #include <esp32-hal-ledc.h>      //用於控制伺服馬達
 #include "esp_camera.h"          //視訊
+#include "Base64.h"              //用於轉換視訊影像格式為base64格式，易於上傳google雲端硬碟或資料庫
 #include "soc/soc.h"             //用於電源不穩不重開機 
 #include "soc/rtc_cntl_reg.h"    //用於電源不穩不重開機 
 
@@ -669,8 +670,7 @@ static esp_err_t status_handler(httpd_req_t *req){
 }
 
 //自訂網頁首頁
-static const char PROGMEM INDEX_HTML[] = R"rawliteral(
-<!doctype html>
+static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -683,16 +683,16 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(
           body{font-family:Arial,Helvetica,sans-serif;background:#181818;color:#EFEFEF;font-size:16px}h2{font-size:18px}section.main{display:flex}#menu,section.main{flex-direction:column}#menu{display:none;flex-wrap:nowrap;min-width:340px;background:#363636;padding:8px;border-radius:4px;margin-top:-10px;margin-right:10px}#content{display:flex;flex-wrap:wrap;align-items:stretch}figure{padding:0;margin:0;-webkit-margin-before:0;margin-block-start:0;-webkit-margin-after:0;margin-block-end:0;-webkit-margin-start:0;margin-inline-start:0;-webkit-margin-end:0;margin-inline-end:0}figure img{display:block;width:100%;height:auto;border-radius:4px;margin-top:8px}@media (min-width: 800px) and (orientation:landscape){#content{display:flex;flex-wrap:nowrap;align-items:stretch}figure img{display:block;max-width:100%;max-height:calc(100vh - 40px);width:auto;height:auto}figure{padding:0;margin:0;-webkit-margin-before:0;margin-block-start:0;-webkit-margin-after:0;margin-block-end:0;-webkit-margin-start:0;margin-inline-start:0;-webkit-margin-end:0;margin-inline-end:0}}section#buttons{display:flex;flex-wrap:nowrap;justify-content:space-between}#nav-toggle{cursor:pointer;display:block}#nav-toggle-cb{outline:0;opacity:0;width:0;height:0}#nav-toggle-cb:checked+#menu{display:flex}.input-group{display:flex;flex-wrap:nowrap;line-height:22px;margin:5px 0}.input-group>label{display:inline-block;padding-right:10px;min-width:47%}.input-group input,.input-group select{flex-grow:1}.range-max,.range-min{display:inline-block;padding:0 5px}button{display:block;margin:5px;padding:0 12px;border:0;line-height:28px;cursor:pointer;color:#fff;background:#ff3034;border-radius:5px;font-size:16px;outline:0}button:hover{background:#ff494d}button:active{background:#f21c21}button.disabled{cursor:default;background:#a0a0a0}input[type=range]{-webkit-appearance:none;width:100%;height:22px;background:#363636;cursor:pointer;margin:0}input[type=range]:focus{outline:0}input[type=range]::-webkit-slider-runnable-track{width:100%;height:2px;cursor:pointer;background:#EFEFEF;border-radius:0;border:0 solid #EFEFEF}input[type=range]::-webkit-slider-thumb{border:1px solid rgba(0,0,30,0);height:22px;width:22px;border-radius:50px;background:#ff3034;cursor:pointer;-webkit-appearance:none;margin-top:-11.5px}input[type=range]:focus::-webkit-slider-runnable-track{background:#EFEFEF}input[type=range]::-moz-range-track{width:100%;height:2px;cursor:pointer;background:#EFEFEF;border-radius:0;border:0 solid #EFEFEF}input[type=range]::-moz-range-thumb{border:1px solid rgba(0,0,30,0);height:22px;width:22px;border-radius:50px;background:#ff3034;cursor:pointer}input[type=range]::-ms-track{width:100%;height:2px;cursor:pointer;background:0 0;border-color:transparent;color:transparent}input[type=range]::-ms-fill-lower{background:#EFEFEF;border:0 solid #EFEFEF;border-radius:0}input[type=range]::-ms-fill-upper{background:#EFEFEF;border:0 solid #EFEFEF;border-radius:0}input[type=range]::-ms-thumb{border:1px solid rgba(0,0,30,0);height:22px;width:22px;border-radius:50px;background:#ff3034;cursor:pointer;height:2px}input[type=range]:focus::-ms-fill-lower{background:#EFEFEF}input[type=range]:focus::-ms-fill-upper{background:#363636}.switch{display:block;position:relative;line-height:22px;font-size:16px;height:22px}.switch input{outline:0;opacity:0;width:0;height:0}.slider{width:50px;height:22px;border-radius:22px;cursor:pointer;background-color:grey}.slider,.slider:before{display:inline-block;transition:.4s}.slider:before{position:relative;content:"";border-radius:50%;height:16px;width:16px;left:4px;top:3px;background-color:#fff}input:checked+.slider{background-color:#ff3034}input:checked+.slider:before{-webkit-transform:translateX(26px);transform:translateX(26px)}select{border:1px solid #363636;font-size:14px;height:22px;outline:0;border-radius:5px}.image-container{position:relative;min-width:160px}.close{position:absolute;right:5px;top:5px;background:#ff3034;width:16px;height:16px;border-radius:100px;color:#fff;text-align:center;line-height:18px;cursor:pointer}.hidden{display:none}
         </style>
         <script src="https:\/\/cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.4"> </script>
-        <script src="https:\/\/cdn.jsdelivr.net/npm/@tensorflow-models/posenet"> </script>  
+        <script src="https:\/\/cdn.jsdelivr.net/npm/@tensorflow-models/posenet"> </script>          
     </head>
     <body>
         <section class="main">
             <section id="buttons">
                 <table>
-                <tr><td><button id="get-still">Restart</button><iframe id="ifr" style="display:none"></iframe></td><td>Relay:<span id="state">OFF</span></td><td></td></tr>
-                <tr><td>MirrorImage<select id="mirrorimage"><option value="1">Y</option><option value="0">N</option></select></td><td style="display:none"><button id="toggle-stream"></button></td><td></td></tr>
+                <tr><td><button id="get-still">Restart</button></td><td style="display:none"><button id="toggle-stream"></button></td><td>Relay:<span id="state">OFF</span></td></tr>
                 <tr><td>Flash</td><td align="center" colspan="2"><input type="range" id="flash" min="0" max="255" value="0" onchange="try{fetch(document.location.origin+'/control?flash='+this.value);}catch(e){}"></td></tr>
                 <tr><td colspan="3"><canvas id="canvas" width="0" height="0"></canvas></td></tr>
+                <tr style="display:none"><td colspan="3"><iframe id="ifr" style="display:none"></iframe></td></tr>
                 </table>
             </section>
             <figure>
@@ -909,7 +909,13 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(
         <option value="0.8">80%</option>
         <option value="0.9">90%</option>
         </select>
-        <br>        
+        <br>
+        MirrorImage
+        <select id="mirrorimage">
+        <option value="1">Y</option>
+        <option value="0">N</option>
+        </select>
+        <br>
         <div id="result">Please wait for loading model.<div>
         
         <script>
@@ -1084,6 +1090,7 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");  
     var result = document.getElementById('result');
+    var ifr = document.getElementById('ifr');
     var imageScaleFactor = 0.75;
     
     function ObjectDetect() {
@@ -1275,33 +1282,54 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(
             var leftAnkle = posenet_person(person_index,"leftAnkle");
             var rightAnkle = posenet_person(person_index,"rightAnkle");
           }
-          
-          // Control Relay
-          if (rightWrist!=''&&leftWrist!=''&&rightShoulder!=''&&leftShoulder!=''&&nose!='') {
-            if (Number(rightWrist[2])>=scoreLimit&&Number(leftWrist[2])>=scoreLimit&&Number(rightShoulder[2])>=scoreLimit&&Number(leftShoulder[2])>=scoreLimit&&Number(nose[2])>=scoreLimit) {
-              var rightWristLeft = Number(rightWrist[3]);
-              var rightWristTop = Number(rightWrist[4]);
-              var leftWristLeft = Number(leftWrist[3]);
-              var leftWristTop = Number(leftWrist[4]);
-              var noseLeft = Number(nose[3]);
-              var noseTop = Number(nose[4]);
-              var rightShoulderLeft = Number(rightShoulder[3]);
-              var rightShoulderTop = Number(rightShoulder[4]);
-              var leftShoulderLeft = Number(leftShoulder[3]);
-              var leftShoulderTop = Number(leftShoulder[4]);
-              if (mirrorimage==1||mirrorimage==0) {
-                if ((rightWristLeft / rightShoulderLeft >= 0.8 && rightWristLeft / rightShoulderLeft <= 1.3) && ((leftShoulderLeft / leftWristLeft >= 0.8 && leftShoulderLeft / leftWristLeft <= 1.3) && ((rightWristTop / noseTop >= 0.9 && rightWristTop / noseTop <= 1.5) && (leftWristTop / noseTop >= 0.9 && leftWristTop / noseTop <= 1.5)))) {
-                  if (document.getElementById("state").innerHTML == "OFF") {
-                    document.getElementById("state").innerHTML = "ON";
-                    document.getElementById("ifr").src = document.location.origin+"/control?var=relay&val=1";
-                    console.log(document.location.origin+"/control?var=relay&val=1");
-                  }
-                } else if (Math.abs(rightWristLeft - leftWristLeft) * 2 <= Math.abs(rightShoulderLeft - leftShoulderLeft) && (rightWristTop > rightShoulderTop && leftWristTop > rightShoulderTop)) {
-                  if (document.getElementById("state").innerHTML == "ON") {
-                    document.getElementById("state").innerHTML = "OFF";
-                    document.getElementById("ifr").src = document.location.origin+"/control?var=relay&val=0";
-                    console.log(document.location.origin+"/control?var=relay&val=0");
-                  }
+
+          var noseLeft = Number(nose[3]);
+          var noseTop = Number(nose[4]);
+          var leftEyeLeft = Number(leftEye[3]);
+          var leftEyeTop = Number(leftEye[4]);
+          var rightEyeLeft = Number(rightEye[3]);
+          var rightEyeTop = Number(rightEye[4]);
+          var leftEarLeft = Number(leftEar[3]);
+          var leftEarTop = Number(leftEar[4]);
+          var rightEarLeft = Number(rightEar[3]);
+          var rightEarTop = Number(rightEar[4]);
+          var leftShoulderLeft = Number(leftShoulder[3]);
+          var leftShoulderTop = Number(leftShoulder[4]);
+          var rightShoulderLeft = Number(rightShoulder[3]);
+          var rightShoulderTop = Number(rightShoulder[4]);
+          var leftElbowLeft = Number(leftElbow[3]);
+          var leftElbowTop = Number(leftElbow[4]);
+          var rightElbowLeft = Number(rightElbow[3]);
+          var rightElbowTop = Number(rightElbow[4]);
+          var leftWristLeft = Number(leftWrist[3]);
+          var leftWristTop = Number(leftWrist[4]);
+          var rightWristLeft = Number(rightWrist[3]);
+          var rightWristTop = Number(rightWrist[4]);
+          var leftHipLeft = Number(leftHip[3]);
+          var leftHipTop = Number(leftHip[4]);
+          var rightHipLeft = Number(rightHip[3]);
+          var rightHipTop = Number(rightHip[4]);
+          var leftKneeLeft = Number(leftKnee[3]);
+          var leftKneeTop = Number(leftKnee[4]);
+          var rightKneeLeft = Number(rightKnee[3]);
+          var rightKneeTop = Number(rightKnee[4]);
+          var leftAnkleLeft = Number(leftAnkle[3]);
+          var leftAnkleTop = Number(leftAnkle[4]);
+          var rightAnkleLeft = Number(rightAnkle[3]);
+          var rightAnkleTop = Number(rightAnkle[4]);
+                      
+          //可以在這區塊做姿態判定控制開關或繼電器
+          if (rightWristLeft>=0&&rightWristTop>=0&&leftWristLeft>=0&&leftWristTop>=0&&rightShoulderLeft>=0&&rightShoulderTop>=0&&leftShoulderLeft>=0&&leftShoulderTop>=0) {
+            if (mirrorimage==1||mirrorimage==0) {  //開關姿勢左右位置條件相同，因此使用鏡像與否皆相同
+              if ((rightWristLeft / rightShoulderLeft >= 0.8 && rightWristLeft / rightShoulderLeft <= 1.3) && ((leftShoulderLeft / leftWristLeft >= 0.8 && leftShoulderLeft / leftWristLeft <= 1.3) && ((rightWristTop / noseTop >= 0.9 && rightWristTop / noseTop <= 1.5) && (leftWristTop / noseTop >= 0.9 && leftWristTop / noseTop <= 1.5)))) {
+                if (document.getElementById("state").innerHTML == "OFF") {
+                  document.getElementById("state").innerHTML = "ON";
+                  ifr.src = document.location.origin+"/control?flash=10";  //控制閃光燈
+                }
+              } else if (Math.abs(rightWristLeft - leftWristLeft) * 2 <= Math.abs(rightShoulderLeft - leftShoulderLeft) && (rightWristTop > rightShoulderTop && leftWristTop > rightShoulderTop)) {
+                if (document.getElementById("state").innerHTML == "ON") {
+                  document.getElementById("state").innerHTML = "OFF";
+                  ifr.src = document.location.origin+"/control?flash=0";  //控制閃光燈
                 }
               }
             }
@@ -1328,20 +1356,23 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(
     }
     
     window.onload = function () { ObjectDetect(); }
+    
     function posenet_person(input_person, input_part){
+      var scoreLimit = Number(document.getElementById("scorelimit").value);
       var result = document.getElementById("result").innerHTML.split("<br>");
       if (result.length>0) {
         for (var i=0;i<result.length;i++) {
           var result_detail = result[i].split(",");
-          if (result_detail[0]==input_person&&result_detail[1]==input_part) 
+          if (result_detail[0]==input_person&&result_detail[1]==input_part&&Number(result_detail[2])>=scoreLimit) 
           return result_detail;
         }
       }
-      return "";
-    }    
+      return "-1,-1,-1,-1,-1";
+    } 
+    
     function position_angle(input_x0,input_y0,input_x1,input_y1) {
       return (Math.atan((input_y1-input_y0)/(input_x1-input_x0)) / Math.PI) * 180;
-    } 
+    }     
     </script>
     
     </body>
@@ -1400,7 +1431,7 @@ void startCameraServer(){
   
   ra_filter_init(&ra_filter, 20);
   
-  Serial.printf("Starting web server on port: '%d'\n", config.server_port);
+  Serial.printf("Starting web server on port: '%d'\n", config.server_port);  //Server Port
   if (httpd_start(&camera_httpd, &config) == ESP_OK) {
       httpd_register_uri_handler(camera_httpd, &index_uri);
       httpd_register_uri_handler(camera_httpd, &cmd_uri);
@@ -1408,8 +1439,8 @@ void startCameraServer(){
       httpd_register_uri_handler(camera_httpd, &capture_uri);
   }
   
-  config.server_port += 1;
-  config.ctrl_port += 1;
+  config.server_port += 1;  //Stream Port
+  config.ctrl_port += 1;    //UDP Port
   Serial.printf("Starting stream server on port: '%d'\n", config.server_port);
   if (httpd_start(&stream_httpd, &config) == ESP_OK) {
       httpd_register_uri_handler(stream_httpd, &stream_uri);
