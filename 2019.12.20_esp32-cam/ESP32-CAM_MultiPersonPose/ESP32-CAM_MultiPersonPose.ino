@@ -1362,16 +1362,18 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
     window.onload = function () { ObjectDetect(); }
     
     function posenet_person(input_person, input_part){
+      var scoreLimit = Number(document.getElementById("scorelimit").value);
       var result = document.getElementById("result").innerHTML.split("<br>");
       if (result.length>0) {
         for (var i=0;i<result.length;i++) {
           var result_detail = result[i].split(",");
-          if (result_detail[0]==input_person&&result_detail[1]==input_part) 
+          if (result_detail[0]==input_person&&result_detail[1]==input_part&&Number(result_detail[2])>=scoreLimit) 
           return result_detail;
         }
       }
-      return "";
+      return "-1,-1,-1,-1,-1";
     } 
+    
     function position_angle(input_x0,input_y0,input_x1,input_y1) {
       return (Math.atan((input_y1-input_y0)/(input_x1-input_x0)) / Math.PI) * 180;
     }     
