@@ -12,7 +12,6 @@ http://STAIP/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 http://192.168.xxx.xxx/control?ip
 http://192.168.xxx.xxx/control?mac
 http://192.168.xxx.xxx/control?restart
-http://192.168.xxx.xxx/control?resetwifi=ssid;password
 http://192.168.xxx.xxx/control?flash=value        //value= 0~255
   
 查詢Client端IP：
@@ -1437,6 +1436,7 @@ void startCameraServer(){
   
   Serial.printf("Starting web server on port: '%d'\n", config.server_port);  //Server Port
   if (httpd_start(&camera_httpd, &config) == ESP_OK) {
+      //註冊自訂網址路徑對應執行的函式
       httpd_register_uri_handler(camera_httpd, &index_uri);
       httpd_register_uri_handler(camera_httpd, &cmd_uri);
       httpd_register_uri_handler(camera_httpd, &status_uri);
