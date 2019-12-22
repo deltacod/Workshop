@@ -1216,7 +1216,7 @@ void startCameraServer(){
   
   ra_filter_init(&ra_filter, 20);
   
-  Serial.printf("Starting web server on port: '%d'\n", config.server_port);
+  Serial.printf("Starting web server on port: '%d'\n", config.server_port);  //Server Port
   if (httpd_start(&camera_httpd, &config) == ESP_OK) {
       //註冊網址路徑執行函式
       httpd_register_uri_handler(camera_httpd, &index_uri);
@@ -1225,8 +1225,8 @@ void startCameraServer(){
       httpd_register_uri_handler(camera_httpd, &capture_uri);
   }
   
-  config.server_port += 1;
-  config.ctrl_port += 1;
+  config.server_port += 1;  //Stream Port
+  config.ctrl_port += 1;    //UDP Port
   Serial.printf("Starting stream server on port: '%d'\n", config.server_port);
   if (httpd_start(&stream_httpd, &config) == ESP_OK) {
       httpd_register_uri_handler(stream_httpd, &stream_uri);
