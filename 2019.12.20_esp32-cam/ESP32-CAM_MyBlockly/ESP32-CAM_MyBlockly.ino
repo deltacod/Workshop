@@ -13,6 +13,7 @@ http://192.168.xxx.xxx/?mac
 http://192.168.xxx.xxx/?restart
 http://192.168.xxx.xxx/?resetwifi=ssid;password
 http://192.168.xxx.xxx/?flash=value        //value= 0~255
+http://192.168.xxx.xxx/?getstill   //取得影像下載
 
 查詢Client端IP：
 查詢IP：http://192.168.4.1/?ip
@@ -24,8 +25,8 @@ http://192.168.xxx.xxx/?restart=stop
 */
 
 //輸入WIFI連線帳號密碼
-const char* ssid     = "xxxxx";   //your network SSID
-const char* password = "xxxxx";   //your network password
+const char* ssid     = "*****";   //your network SSID
+const char* password = "*****";   //your network password
 
 //輸入AP端連線帳號密碼
 const char* apssid = "ESP32-CAM";
@@ -286,23 +287,62 @@ void loop() {
             client.println();
             */
 
-            //回傳HTML格式
-            client.println("HTTP/1.1 200 OK");
-            client.println("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-            client.println("Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS");
-            client.println("Content-Type: text/html; charset=utf-8");
-            client.println("Access-Control-Allow-Origin: *");
-            client.println("Connection: close");
-            client.println();
-            client.println("<!DOCTYPE HTML>");
-            client.println("<html><head>");
-            client.println("<meta charset=\"UTF-8\">");
-            client.println("<meta http-equiv=\"Access-Control-Allow-Origin\" content=\"*\">");
-            client.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
-            client.println("</head><body>");
-            client.println(Feedback);
-            client.println("</body></html>");
-            client.println();
+            if (cmd=="getstill") {
+              //回傳JPEG格式影像
+              camera_fb_t * fb = NULL;
+              fb = esp_camera_fb_get();  
+              if(!fb) {
+                Serial.println("Camera capture failed");
+                delay(1000);
+                ESP.restart();
+              }
+  
+              client.println("HTTP/1.1 200 OK");
+              client.println("Access-Control-Allow-Origin: *");              
+              client.println("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+              client.println("Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS");
+              client.println("Content-Type: image/jpeg");
+              client.println("Content-Disposition: form-data; name=\"imageFile\"; filename=\"picture.jpg\""); 
+              client.println("Content-Length: " + String(fb->len));             
+              client.println("Connection: close");
+              client.println();
+              uint8_t *fbBuf = fb->buf;
+              size_t fbLen = fb->len;
+              for (size_t n=0;n<fbLen;n=n+1024) {
+                if (n+1024<fbLen) {
+                  client.write(fbBuf, 1024);
+                  fbBuf += 1024;
+                }
+                else if (fbLen%1024>0) {
+                  size_t remainder = fbLen%1024;
+                  client.write(fbBuf, remainder);
+                }
+              }  
+              client.println();
+              esp_camera_fb_return(fb);
+            
+              pinMode(4, OUTPUT);
+              digitalWrite(4, LOW);               
+            }
+            else {
+              //回傳TEXT或HTML格式
+              client.println("HTTP/1.1 200 OK");
+              client.println("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+              client.println("Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS");
+              client.println("Content-Type: text/html; charset=utf-8");
+              client.println("Access-Control-Allow-Origin: *");
+              client.println("Connection: close");
+              client.println();
+              client.println("<!DOCTYPE HTML>");
+              client.println("<html><head>");
+              client.println("<meta charset=\"UTF-8\">");
+              client.println("<meta http-equiv=\"Access-Control-Allow-Origin\" content=\"*\">");
+              client.println("<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
+              client.println("</head><body>");
+              client.println(Feedback);
+              client.println("</body></html>");
+              client.println();
+            }
                         
             Feedback="";
             break;
