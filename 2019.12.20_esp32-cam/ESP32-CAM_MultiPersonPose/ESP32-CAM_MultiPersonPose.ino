@@ -1,6 +1,7 @@
 /*
 ESP32-CAM MULTI-PERSON POSE Estimation
-Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-20 00:00
+Open the page in Chrome.
+Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-22 19:30
 https://www.facebook.com/francefu
 
 自訂指令格式 :  
@@ -8,51 +9,51 @@ http://APIP/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 http://STAIP/control?cmd=P1;P2;P3;P4;P5;P6;P7;P8;P9
 
 預設AP端IP： 192.168.4.1
-http://192.168.4.1/control?ip
-http://192.168.4.1/control?mac
-http://192.168.4.1/control?restart
-http://192.168.4.1/control?resetwifi=ssid;password
-http://192.168.4.1/control?flash=value        //vale= 0~255
-
-http://192.168.4.1             //網頁首頁管理介面
-http://192.168.4.1:81/stream   //取得串流影像
-http://192.168.4.1/capture     //取得影像
-http://192.168.4.1/status      //取得狀態設定值
-
-//設定視訊參數
-http://192.168.4.1/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
-http://192.168.4.1/control?var=quality&val=value    // value = 10 ~ 63
-http://192.168.4.1/control?var=brightness&val=value    // value = -2 ~ 2
-http://192.168.4.1/control?var=contrast&val=value    // value = -2 ~ 2
-http://192.168.4.1/control?var=saturation&val=value    // value = -2 ~ 2 
-http://192.168.4.1/control?var=gainceiling&val=value    // value = 0 ~ 6
-http://192.168.4.1/control?var=colorbar&val=value    // value = 0 or 1
-http://192.168.4.1/control?var=awb&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=agc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=aec&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=hmirror&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=vflip&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=awb_gain&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=agc_gain&val=value    // value = 0 ~ 30
-http://192.168.4.1/control?var=aec_value&val=value    // value = 0 ~ 1200
-http://192.168.4.1/control?var=aec2&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=dcw&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=bpc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=wpc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=raw_gma&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=lenc&val=value    // value = 0 or 1 
-http://192.168.4.1/control?var=special_effect&val=value    // value = 0 ~ 6
-http://192.168.4.1/control?var=wb_mode&val=value    // value = 0 ~ 4
-http://192.168.4.1/control?var=ae_level&val=value    // value = -2 ~ 2  
-      
+http://192.168.xxx.xxx/control?ip
+http://192.168.xxx.xxx/control?mac
+http://192.168.xxx.xxx/control?restart
+http://192.168.xxx.xxx/control?resetwifi=ssid;password
+http://192.168.xxx.xxx/control?flash=value        //value= 0~255
+  
 查詢Client端IP：
 查詢IP：http://192.168.4.1/?ip
 重設網路：http://192.168.4.1/?resetwifi=ssid;password
+
+http://192.168.xxx.xxx             //網頁首頁管理介面
+http://192.168.xxx.xxx:81/stream   //取得串流影像
+http://192.168.xxx.xxx/capture     //取得影像
+http://192.168.xxx.xxx/status      //取得視訊參數值
+
+//設定視訊參數
+http://192.168.xxx.xxx/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
+http://192.168.xxx.xxx/control?var=quality&val=value    // value = 10 ~ 63
+http://192.168.xxx.xxx/control?var=brightness&val=value    // value = -2 ~ 2
+http://192.168.xxx.xxx/control?var=contrast&val=value    // value = -2 ~ 2
+http://192.168.xxx.xxx/control?var=saturation&val=value    // value = -2 ~ 2 
+http://192.168.xxx.xxx/control?var=gainceiling&val=value    // value = 0 ~ 6
+http://192.168.xxx.xxx/control?var=colorbar&val=value    // value = 0 or 1
+http://192.168.xxx.xxx/control?var=awb&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=agc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=aec&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=hmirror&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=vflip&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=awb_gain&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=agc_gain&val=value    // value = 0 ~ 30
+http://192.168.xxx.xxx/control?var=aec_value&val=value    // value = 0 ~ 1200
+http://192.168.xxx.xxx/control?var=aec2&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=dcw&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=bpc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=wpc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=raw_gma&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=lenc&val=value    // value = 0 or 1 
+http://192.168.xxx.xxx/control?var=special_effect&val=value    // value = 0 ~ 6
+http://192.168.xxx.xxx/control?var=wb_mode&val=value    // value = 0 ~ 4
+http://192.168.xxx.xxx/control?var=ae_level&val=value    // value = -2 ~ 2  
 */
 
 //輸入WIFI連線帳號密碼
-const char* ssid     = "*****";   //your network SSID
-const char* password = "*****";   //your network password
+const char* ssid     = "3COM";   //your network SSID
+const char* password = "godblessyou";   //your network password
 
 //輸入AP端連線帳號密碼
 const char* apssid = "ESP32-CAM";
@@ -660,7 +661,7 @@ static esp_err_t status_handler(httpd_req_t *req){
     return httpd_resp_send(req, json_response, strlen(json_response));
 }
 
-//自訂網頁首頁管理介面
+//自訂網頁首頁
 static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
 <html>
     <head>
@@ -680,9 +681,10 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
         <section class="main">
             <section id="buttons">
                 <table>
-                <tr><td><button id="get-still" style="display:none">Restart</button></td><td style="display:none"><button id="toggle-stream"></button></td><td></td></tr>                
+                <tr><td><button id="get-still">Restart</button></td><td style="display:none"><button id="toggle-stream"></button></td><td>Relay:<span id="state">OFF</span></td></tr>
                 <tr><td>Flash</td><td align="center" colspan="2"><input type="range" id="flash" min="0" max="255" value="0" onchange="try{fetch(document.location.origin+'/control?flash='+this.value);}catch(e){}"></td></tr>
                 <tr><td colspan="3"><canvas id="canvas" width="0" height="0"></canvas></td></tr>
+                <tr style="display:none"><td colspan="3"><iframe id="ifr" style="display:none"></iframe></td></tr>
                 </table>
             </section>
             <figure>
@@ -899,7 +901,13 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
         <option value="0.8">80%</option>
         <option value="0.9">90%</option>
         </select>
-        <br>        
+        <br>
+        MirrorImage
+        <select id="mirrorimage">
+        <option value="1">Y</option>
+        <option value="0">N</option>
+        </select>
+        <br>
         <div id="result">Please wait for loading model.<div>
         
         <script>
@@ -1074,28 +1082,37 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");  
     var result = document.getElementById('result');
+    var ifr = document.getElementById('ifr');
     var imageScaleFactor = 0.75;
     
     function ObjectDetect() {
       posenet.load().then(function(net) {
         Model = net;
         result.innerHTML = "";
-        getStill.style.display = "block";
         getStill.click();
       });     
     }
     
     async function DetectImage() {
-      await Model.estimatePoses(ShowImage, {flipHorizontal: false, decodingMethod: 'multi-person', maxPoseDetections: 5, scoreThreshold: 0.5, nmsRadius: 20}).then(pose => {
+      canvas.setAttribute("width", ShowImage.width);
+      canvas.setAttribute("height", ShowImage.height);
+      var mirrorimage = Number(document.getElementById("mirrorimage").value);
+      if (mirrorimage==1) {
+        context.translate((canvas.width + ShowImage.width) / 2, 0);
+        context.scale(-1, 1);
+        context.drawImage(ShowImage, 0, 0, ShowImage.width, ShowImage.height);
+        context.setTransform(1, 0, 0, 1, 0, 0);
+      }
+      else
+        context.drawImage(ShowImage, 0, 0, ShowImage.width, ShowImage.height);   
+      
+      await Model.estimatePoses(canvas, {flipHorizontal: false, decodingMethod: 'multi-person', maxPoseDetections: 5, scoreThreshold: 0.5, nmsRadius: 20}).then(pose => {
         //console.log(pose.score);
         //console.log(pose.keypoints);
         result.innerHTML = "";  
         var scoreLimit = Number(document.getElementById("scorelimit").value);
-        
-        canvas.setAttribute("width", ShowImage.width);
-        canvas.setAttribute("height", ShowImage.height);
-        context.drawImage(ShowImage,0,0,ShowImage.width,ShowImage.height);   
         var s = (ShowImage.width>ShowImage.height)?ShowImage.width:ShowImage.height;
+        
         if (pose.length>0) {
           for (var n=0;n<pose.length;n++) {
             if (n<Number(document.getElementById("persons").value)) {
@@ -1111,8 +1128,8 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
                     context.closePath();
                     context.fill();
                   }     
-                  result.innerHTML += "[" + n + "]" + k[i].part + ", " + Math.round(k[i].score*100) + "%, " + Math.round(k[i].position.x) + ", " + Math.round(k[i].position.y) + "<br>";
-                }
+                  result.innerHTML += n + "," + k[i].part + "," + Math.round(k[i].score*100)/100 + "," + Math.round(k[i].position.x) + "," + Math.round(k[i].position.y) + "<br>";
+                }                
               
                 context.lineWidth = 2;
                 var centerShoulderX = (k[5].position.x+k[6].position.x)/2;
@@ -1217,6 +1234,110 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
               }
             }
           }
+          
+          var person_index = 0;
+          if (mirrorimage==1) {
+            var nose = posenet_person(person_index,"nose");
+            var leftEye = posenet_person(person_index,"rightEye");
+            var rightEye = posenet_person(person_index,"leftEye");
+            var leftEar = posenet_person(person_index,"rightEar");
+            var rightEar = posenet_person(person_index,"leftEar");
+            var leftShoulder = posenet_person(person_index,"rightShoulder");
+            var rightShoulder = posenet_person(person_index,"leftShoulder");
+            var leftElbow = posenet_person(person_index,"rightElbow");
+            var rightElbow = posenet_person(person_index,"leftElbow");
+            var leftWrist = posenet_person(person_index,"rightWrist");
+            var rightWrist = posenet_person(person_index,"leftWrist");
+            var leftHip = posenet_person(person_index,"rightHip");
+            var rightHip = posenet_person(person_index,"leftHip");
+            var leftKnee = posenet_person(person_index,"rightKnee");
+            var rightKnee = posenet_person(person_index,"leftKnee");
+            var leftAnkle = posenet_person(person_index,"rightAnkle");
+            var rightAnkle = posenet_person(person_index,"leftAnkle");
+          }
+          else {      
+            var nose = posenet_person(person_index,"nose");
+            var leftEye = posenet_person(person_index,"leftEye");
+            var rightEye = posenet_person(person_index,"rightEye");
+            var leftEar = posenet_person(person_index,"leftEar");
+            var rightEar = posenet_person(person_index,"rightEar");
+            var leftShoulder = posenet_person(person_index,"leftShoulder");
+            var rightShoulder = posenet_person(person_index,"rightShoulder");
+            var leftElbow = posenet_person(person_index,"leftElbow");
+            var rightElbow = posenet_person(person_index,"rightElbow");
+            var leftWrist = posenet_person(person_index,"leftWrist");
+            var rightWrist = posenet_person(person_index,"rightWrist");
+            var leftHip = posenet_person(person_index,"leftHip");
+            var rightHip = posenet_person(person_index,"rightHip");
+            var leftKnee = posenet_person(person_index,"leftKnee");
+            var rightKnee = posenet_person(person_index,"rightKnee");
+            var leftAnkle = posenet_person(person_index,"leftAnkle");
+            var rightAnkle = posenet_person(person_index,"rightAnkle");
+          }
+
+          var noseLeft = Number(nose[3]);
+          var noseTop = Number(nose[4]);
+          var leftEyeLeft = Number(leftEye[3]);
+          var leftEyeTop = Number(leftEye[4]);
+          var rightEyeLeft = Number(rightEye[3]);
+          var rightEyeTop = Number(rightEye[4]);
+          var leftEarLeft = Number(leftEar[3]);
+          var leftEarTop = Number(leftEar[4]);
+          var rightEarLeft = Number(rightEar[3]);
+          var rightEarTop = Number(rightEar[4]);
+          var leftShoulderLeft = Number(leftShoulder[3]);
+          var leftShoulderTop = Number(leftShoulder[4]);
+          var rightShoulderLeft = Number(rightShoulder[3]);
+          var rightShoulderTop = Number(rightShoulder[4]);
+          var leftElbowLeft = Number(leftElbow[3]);
+          var leftElbowTop = Number(leftElbow[4]);
+          var rightElbowLeft = Number(rightElbow[3]);
+          var rightElbowTop = Number(rightElbow[4]);
+          var leftWristLeft = Number(leftWrist[3]);
+          var leftWristTop = Number(leftWrist[4]);
+          var rightWristLeft = Number(rightWrist[3]);
+          var rightWristTop = Number(rightWrist[4]);
+          var leftHipLeft = Number(leftHip[3]);
+          var leftHipTop = Number(leftHip[4]);
+          var rightHipLeft = Number(rightHip[3]);
+          var rightHipTop = Number(rightHip[4]);
+          var leftKneeLeft = Number(leftKnee[3]);
+          var leftKneeTop = Number(leftKnee[4]);
+          var rightKneeLeft = Number(rightKnee[3]);
+          var rightKneeTop = Number(rightKnee[4]);
+          var leftAnkleLeft = Number(leftAnkle[3]);
+          var leftAnkleTop = Number(leftAnkle[4]);
+          var rightAnkleLeft = Number(rightAnkle[3]);
+          var rightAnkleTop = Number(rightAnkle[4]);
+          /*            
+            //可以在這區塊做姿態判定控制開關或繼電器
+            if (mirrorimage==1) {  //使用鏡像時
+              if (開燈條件) {
+                if (document.getElementById("state").innerHTML == "OFF") {
+                  document.getElementById("state").innerHTML = "ON";
+                  //ifr.src = document.location.origin+"/control?flash=10";
+                }
+              } else if (關燈條件) {
+                if (document.getElementById("state").innerHTML == "ON") {
+                  document.getElementById("state").innerHTML = "OFF";
+                  //ifr.src = document.location.origin+"/control?flash=0";
+                }
+              }
+            }
+            else {  //未使用鏡像時
+              if (開燈條件) {
+                if (document.getElementById("state").innerHTML == "OFF") {
+                  document.getElementById("state").innerHTML = "ON";
+                  //ifr.src = document.location.origin+"/control?flash=10";
+                }
+              } else if (關燈條件) {
+                if (document.getElementById("state").innerHTML == "ON") {
+                  document.getElementById("state").innerHTML = "OFF";
+                  //ifr.src = document.location.origin+"/control?flash=0";
+                }
+              }
+            }
+          */
         }
         else
           result.innerHTML = "Unrecognizable";  
@@ -1239,6 +1360,21 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(<!doctype html>
     }
     
     window.onload = function () { ObjectDetect(); }
+    
+    function posenet_person(input_person, input_part){
+      var result = document.getElementById("result").innerHTML.split("<br>");
+      if (result.length>0) {
+        for (var i=0;i<result.length;i++) {
+          var result_detail = result[i].split(",");
+          if (result_detail[0]==input_person&&result_detail[1]==input_part) 
+          return result_detail;
+        }
+      }
+      return "";
+    } 
+    function position_angle(input_x0,input_y0,input_x1,input_y1) {
+      return (Math.atan((input_y1-input_y0)/(input_x1-input_x0)) / Math.PI) * 180;
+    }     
     </script>
     
     </body>
@@ -1297,7 +1433,7 @@ void startCameraServer(){
   
   ra_filter_init(&ra_filter, 20);
   
-  Serial.printf("Starting web server on port: '%d'\n", config.server_port);
+  Serial.printf("Starting web server on port: '%d'\n", config.server_port);  //Server Port
   if (httpd_start(&camera_httpd, &config) == ESP_OK) {
       httpd_register_uri_handler(camera_httpd, &index_uri);
       httpd_register_uri_handler(camera_httpd, &cmd_uri);
@@ -1305,8 +1441,8 @@ void startCameraServer(){
       httpd_register_uri_handler(camera_httpd, &capture_uri);
   }
   
-  config.server_port += 1;
-  config.ctrl_port += 1;
+  config.server_port += 1;  //Stream Port
+  config.ctrl_port += 1;    //UDP Port
   Serial.printf("Starting stream server on port: '%d'\n", config.server_port);
   if (httpd_start(&stream_httpd, &config) == ESP_OK) {
       httpd_register_uri_handler(stream_httpd, &stream_uri);
