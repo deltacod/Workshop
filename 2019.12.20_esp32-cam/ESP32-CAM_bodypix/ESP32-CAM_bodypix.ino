@@ -1218,6 +1218,7 @@ void startCameraServer(){
   
   Serial.printf("Starting web server on port: '%d'\n", config.server_port);
   if (httpd_start(&camera_httpd, &config) == ESP_OK) {
+      //註冊網址路徑執行函式
       httpd_register_uri_handler(camera_httpd, &index_uri);
       httpd_register_uri_handler(camera_httpd, &cmd_uri);
       httpd_register_uri_handler(camera_httpd, &status_uri);
