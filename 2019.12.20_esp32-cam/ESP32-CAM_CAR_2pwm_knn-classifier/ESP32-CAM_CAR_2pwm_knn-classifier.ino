@@ -1,7 +1,7 @@
 /*
 ESP32-CAM Remote Control Car (knn-classifier) 
 Open the page in Chrome.
-Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-24 01:30
+Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-24 01:00
 https://www.facebook.com/francefu
 
 Motor Driver IC -> PWM1(gpio12, gpio13), PWM2(gpio14, gpio15)
