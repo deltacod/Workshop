@@ -739,7 +739,7 @@ static esp_err_t cmd_handler(httpd_req_t *req){
     }
 }
 
-//顯示視訊參數狀態
+//顯示視訊參數狀態(須回傳json格式)
 static esp_err_t status_handler(httpd_req_t *req){
     static char json_response[1024];
 
