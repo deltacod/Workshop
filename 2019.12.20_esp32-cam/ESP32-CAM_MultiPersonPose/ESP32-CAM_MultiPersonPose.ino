@@ -1388,7 +1388,7 @@ static esp_err_t index_handler(httpd_req_t *req){
 }
 
 void startCameraServer(){
-  httpd_config_t config = HTTPD_DEFAULT_CONFIG();  //可在此設定SERVER PORT 
+  httpd_config_t config = HTTPD_DEFAULT_CONFIG();  //可在HTTPD_DEFAULT_CONFIG()中設定Server Port
 
   //可自訂網址路徑
   //http://192.168.xxx.xxx/
