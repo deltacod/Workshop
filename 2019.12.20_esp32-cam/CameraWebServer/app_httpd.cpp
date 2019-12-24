@@ -1,6 +1,6 @@
 /*
 ESP32-CAM CameraWebServer (Facial recognition)
-Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-22 01:30
+Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-24 01:30
 https://www.facebook.com/francefu
 
 http://192.168.xxx.xxx             //網頁首頁管理介面
@@ -213,19 +213,14 @@ static int run_face_recognition(dl_matrix3du_t *image_matrix, box_array_t *net_b
             if (matched_id >= 0) {
                 //如果偵測到有註冊的人臉可在此區塊自訂顯示人名與開門控制。
                 Serial.printf("Match Face ID: %u\n", matched_id);
-              
-                boolean state=false;  //state=true 時使用自訂人名
-                if (state==true) {
-                  //可在此控制伺服馬達轉動開門
-                  if (matched_id==0) {
-                    rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] Name0", matched_id);
-                  }
-                  else if (matched_id==1) {
-                    rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] Name1", matched_id);
-                  }                
-                  else
-                    rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] No Name", matched_id);
-                } 
+
+                //可在此控制伺服馬達轉動開門
+                if (matched_id==0) {
+                  rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] Name0", matched_id);
+                }
+                else if (matched_id==1) {
+                  rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] Name1", matched_id);
+                }                
                 else
                   rgb_printf(image_matrix, FACE_COLOR_GREEN, "Hello matched_id %u", matched_id);
             } else {
@@ -492,7 +487,7 @@ static esp_err_t stream_handler(httpd_req_t *req){
     return res;
 }
 
-//指令參數控制  http://192.168.xxx.xxx/control?var=xxx&val=xxx
+//官方指令參數控制  http://192.168.xxx.xxx/control?var=xxx&val=xxx
 static esp_err_t cmd_handler(httpd_req_t *req){
     char*  buf;  //存取網址後帶的參數字串
     size_t buf_len;
@@ -525,8 +520,7 @@ static esp_err_t cmd_handler(httpd_req_t *req){
         return ESP_FAIL;
     }
 
-    //官方指令區塊
-    //可在此自訂官方格式自訂指令
+    //官方指令區塊，可在此自訂官方格式自訂指令
     int val = atoi(value);
     sensor_t * s = esp_camera_sensor_get();
     int res = 0;
@@ -590,7 +584,7 @@ static esp_err_t cmd_handler(httpd_req_t *req){
     return httpd_resp_send(req, NULL, 0);
 }
 
-//顯示視訊參數狀態  http://192.168.xxx.xxx/status
+//顯示視訊參數狀態(須回傳json格式)  http://192.168.xxx.xxx/status
 static esp_err_t status_handler(httpd_req_t *req){
     static char json_response[1024];
 
@@ -1482,7 +1476,7 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
 
-   //http://192.168.xxx.xxx:/stream
+   //http://192.168.xxx.xxx:81/stream
    httpd_uri_t stream_uri = {
         .uri       = "/stream",
         .method    = HTTP_GET,
