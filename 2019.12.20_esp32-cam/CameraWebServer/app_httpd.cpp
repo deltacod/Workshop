@@ -218,10 +218,10 @@ static int run_face_recognition(dl_matrix3du_t *image_matrix, box_array_t *net_b
                 if (state==true) {
                   //可在此控制伺服馬達轉動開門
                   if (matched_id==0) {
-                    rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] France", matched_id);
+                    rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] Name0", matched_id);
                   }
                   else if (matched_id==1) {
-                    rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] Mary", matched_id);
+                    rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] Name1", matched_id);
                   }                
                   else
                     rgb_printf(image_matrix, FACE_COLOR_GREEN, "[%u] No Name", matched_id);
@@ -229,10 +229,10 @@ static int run_face_recognition(dl_matrix3du_t *image_matrix, box_array_t *net_b
                 else
                   rgb_printf(image_matrix, FACE_COLOR_GREEN, "Hello matched_id %u", matched_id);
             } else {
+                //可增加指令發出陌生人警示訊息                    
                 Serial.println("No Match Found");
                 rgb_print(image_matrix, FACE_COLOR_RED, "Intruder Alert!");
                 matched_id = -1;
-                //可增加指令發出陌生人警示訊息
             }
         }
     } else {
@@ -526,6 +526,7 @@ static esp_err_t cmd_handler(httpd_req_t *req){
     }
 
     //官方指令區塊
+    //可在此自訂官方格式自訂指令
     int val = atoi(value);
     sensor_t * s = esp_camera_sensor_get();
     int res = 0;
@@ -1481,7 +1482,7 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
 
-   //http://192.168.xxx.xxx/stream
+   //http://192.168.xxx.xxx:/stream
    httpd_uri_t stream_uri = {
         .uri       = "/stream",
         .method    = HTTP_GET,
