@@ -71,7 +71,7 @@ const char* password = "*****";   //your network password
 
 //輸入AP端連線帳號密碼
 const char* apssid = "ESP32-CAM";
-const char* appassword = "12345678";         //AP password require at least 8 characters.
+const char* appassword = "12345678";         //AP密碼至少要8個字元以上
 
 int speedR = 255;  //紀錄右輪初始轉速 (gpio12, gpio13)
 int speedL = 255;  //紀錄左輪初始轉速 (gpio14, gpio15)
