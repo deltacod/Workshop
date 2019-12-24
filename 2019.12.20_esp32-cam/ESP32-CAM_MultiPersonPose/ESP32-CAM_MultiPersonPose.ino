@@ -56,7 +56,7 @@ const char* password = "*****";   //your network password
 
 //輸入AP端連線帳號密碼
 const char* apssid = "ESP32-CAM";
-const char* appassword = "12345678";         //AP password require at least 8 characters.
+const char* appassword = "12345678";         //AP密碼至少要8個字元以上
 
 #include <WiFi.h>
 #include <esp32-hal-ledc.h>      //用於控制伺服馬達
