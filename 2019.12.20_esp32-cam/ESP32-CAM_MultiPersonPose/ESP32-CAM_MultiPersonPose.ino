@@ -1423,7 +1423,7 @@ void startCameraServer(){
       .user_ctx  = NULL
   };
 
-  //http://192.168.xxx.xxx/stream
+  //http://192.168.xxx.xxx:81/stream
   httpd_uri_t stream_uri = {
       .uri       = "/stream",
       .method    = HTTP_GET,
