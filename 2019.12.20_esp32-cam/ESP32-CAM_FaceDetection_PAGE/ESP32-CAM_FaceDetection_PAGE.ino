@@ -1,6 +1,6 @@
 /*
 ESP32-CAM CameraWebServer (Facial recognition)
-Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-23 01:30
+Author : ChungYi Fu (Kaohsiung, Taiwan)  2019-12-24 01:00
 https://www.facebook.com/francefu
 
 http://192.168.xxx.xxx             //網頁首頁管理介面
@@ -8,7 +8,7 @@ http://192.168.xxx.xxx:81/stream   //取得串流影像
 http://192.168.xxx.xxx/capture     //取得影像
 http://192.168.xxx.xxx/status      //取得視訊參數值
 
-//設定視訊參數
+//設定視訊參數(官方指令格式)
 http://192.168.xxx.xxx/control?var=framesize&val=value    // value = 10->UXGA(1600x1200), 9->SXGA(1280x1024), 8->XGA(1024x768) ,7->SVGA(800x600), 6->VGA(640x480), 5 selected=selected->CIF(400x296), 4->QVGA(320x240), 3->HQVGA(240x176), 0->QQVGA(160x120)
 http://192.168.xxx.xxx/control?var=quality&val=value    // value = 10 ~ 63
 http://192.168.xxx.xxx/control?var=brightness&val=value    // value = -2 ~ 2
@@ -22,7 +22,7 @@ const char* password = "*****";
 
 //輸入AP端連線帳號密碼
 const char* apssid = "ESP32-CAM";
-const char* appassword = "12345678";         //AP密碼至少要8個字以上
+const char* appassword = "12345678";         //AP密碼至少要8個字元以上
 
 //人臉辨識註冊人臉畫面捕捉張數
 #define ENROLL_CONFIRM_TIMES 5
@@ -30,6 +30,7 @@ const char* appassword = "12345678";         //AP密碼至少要8個字以上
 //人臉辨識最大註冊人數
 #define FACE_ID_SAVE_NUMBER 7
 
+//設定人臉辨識顯示的人名
 String recognize_face_matched_name_0 = "Mike";
 String recognize_face_matched_name_1 = "Name1";
 String recognize_face_matched_name_2 = "Name2";
@@ -41,7 +42,7 @@ String recognize_face_matched_name_6 = "Name6";
 #include <WiFi.h>
 #include "soc/soc.h"             //用於電源不穩不重開機 
 #include "soc/rtc_cntl_reg.h"    //用於電源不穩不重開機 
-#include "esp_camera.h"  //視訊函式
+#include "esp_camera.h"          //視訊函式
 #include "img_converters.h"
 #include "fb_gfx.h"
 #include "fd_forward.h"
@@ -54,7 +55,7 @@ String recognize_face_matched_name_6 = "Name6";
 //            or another board which has PSRAM enabled
 //
 
-//CAMERA_MODEL_AI_THINKER  指定安可信ESP32-CAM模組腳位設定
+//安可信ESP32-CAM模組腳位設定
 #define PWDN_GPIO_NUM     32
 #define RESET_GPIO_NUM    -1
 #define XCLK_GPIO_NUM      0
@@ -667,11 +668,12 @@ static esp_err_t cmd_handler(httpd_req_t *req){
         return ESP_FAIL;
     }
 
-    //官方指令區塊
+    
     int val = atoi(value);
     sensor_t * s = esp_camera_sensor_get();
     int res = 0;
 
+    //官方指令區塊，也可在此自訂指令  http://192.168.xxx.xxx/control?var=xxx&val=xxx
     if(!strcmp(variable, "framesize")) {
         if(s->pixformat == PIXFORMAT_JPEG) res = s->set_framesize(s, (framesize_t)val);
     }
@@ -1388,7 +1390,7 @@ void startCameraServer(){
         .user_ctx  = NULL
     };
 
-   //http://192.168.xxx.xxx/stream
+   //http://192.168.xxx.xxx:81/stream
    httpd_uri_t stream_uri = {
         .uri       = "/stream",
         .method    = HTTP_GET,
