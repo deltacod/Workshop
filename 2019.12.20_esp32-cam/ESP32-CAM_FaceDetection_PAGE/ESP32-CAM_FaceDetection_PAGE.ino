@@ -709,7 +709,7 @@ static esp_err_t cmd_handler(httpd_req_t *req){
     return httpd_resp_send(req, NULL, 0);
 }
 
-//顯示視訊參數狀態  http://192.168.xxx.xxx/status
+//顯示視訊參數狀態(須回傳json格式)
 static esp_err_t status_handler(httpd_req_t *req){
     static char json_response[1024];
 
