@@ -399,7 +399,7 @@ static size_t jpg_encode_stream(void * arg, size_t index, const void* data, size
     return len;
 }
 
-//影像截圖  http://192.168.xxx.xxx/capture
+//影像截圖
 static esp_err_t capture_handler(httpd_req_t *req){
     camera_fb_t * fb = NULL;
     esp_err_t res = ESP_OK;
@@ -487,7 +487,7 @@ static esp_err_t capture_handler(httpd_req_t *req){
     return res;
 }
 
-//影像串流  http://192.168.xxx.xxx:81/stream
+//影像串流
 static esp_err_t stream_handler(httpd_req_t *req){
     camera_fb_t * fb = NULL;
     esp_err_t res = ESP_OK;
@@ -635,7 +635,7 @@ static esp_err_t stream_handler(httpd_req_t *req){
     return res;
 }
 
-//指令參數控制  http://192.168.xxx.xxx/control?var=xxx&val=xxx
+//指令參數控制
 static esp_err_t cmd_handler(httpd_req_t *req){
     char*  buf;  //存取網址後帶的參數字串
     size_t buf_len;
