@@ -33,7 +33,7 @@ https://fustyles.github.io/webduino/Azure_FaceDetection_20190901/blockly.json
 https://fustyles.github.io/webduino/Azure_FaceFindSimilar_20191117/blockly.json
 
 驗證同一人(Microsoft Azure Face API API – Verify Face To Face) 
-https://fustyles.github.io/webduino/ Azure_FaceToFaceVerify_20191118/blockly.json
+https://fustyles.github.io/webduino/Azure_FaceToFaceVerify_20191118/blockly.json
 
 深度學習 (tfjs KNN-Classifier)
 https://fustyles.github.io/webduino/knn-classifier_20190608/blockly.json
