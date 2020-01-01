@@ -1,6 +1,6 @@
 /*
 ESP32-CAM (SD Card Manager)
-Author : ChungYi Fu (Kaohsiung, Taiwan)  2020-1-1 17:30
+Author : ChungYi Fu (Kaohsiung, Taiwan)  2020-1-1 20:00
 https://www.facebook.com/francefu
 
 Arduino IDE settings
@@ -164,7 +164,7 @@ static const char PROGMEM INDEX_HTML[] = R"rawliteral(
   <tr>
    <td><input type="button" value="Restart" onclick="execute(location.origin+'/?restart');"></td>
   <td><input type="button" value="Image List" onclick="streamState=false;execute(location.origin+'/?listimages');"></td>              
-  <td><input type="button" value="Save Image" onclick="streamState=false;execute(location.origin+'/?saveimage='+(new Date().getFullYear()*10000000000+(new Date().getMonth()+1)*100000000+new Date().getDay()*1000000+new Date().getHours()*10000+new Date().getMinutes()*100+new Date().getSeconds()).toString());"></td>  
+  <td><input type="button" value="Save Image" onclick="streamState=false;execute(location.origin+'/?saveimage='+(new Date().getFullYear()*10000000000+(new Date().getMonth()+1)*100000000+new Date().getDate()*1000000+new Date().getHours()*10000+new Date().getMinutes()*100+new Date().getSeconds()).toString());"></td>  
  </tr>
   <tr>
   <td>Flash</td>
