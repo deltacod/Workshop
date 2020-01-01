@@ -437,7 +437,7 @@ void loop() {
               digitalWrite(4, LOW);               
             }  
             else {
-              //回傳HTML格式
+              //回傳HTML首頁或Feedback
               client.println("HTTP/1.1 200 OK");
               client.println("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
               client.println("Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS");
@@ -506,7 +506,7 @@ String ListImages() {
     if(!file.isDirectory()){
       String filename=String(file.name());
       if (filename=="/"+P1+".jpg")
-        list = "<tr><td><button onclick=\'execute(location.origin+\"/?deleteimage="+String(file.name())+"\");\'>Delete</button></td><td bgcolor=\"red\"><a onclick=\'document.getElementById(\"showimage\").src=location.origin+\"/?showimage="+String(file.name())+"\";\'>"+String(file.name())+"</a></td><td align=\'right\'>"+String(file.size())+" B</td><td><button onclick=\'location.href=location.origin+\"/?showimage="+String(file.name())+"\";\'>download</button></td></tr>"+list;
+        list = "<tr><td><button onclick=\'execute(location.origin+\"/?deleteimage="+String(file.name())+"\");\'>Delete</button></td><td bgcolor=\"yellow\"><a onclick=\'document.getElementById(\"showimage\").src=location.origin+\"/?showimage="+String(file.name())+"\";\'>"+String(file.name())+"</a></td><td align=\'right\'>"+String(file.size())+" B</td><td><button onclick=\'location.href=location.origin+\"/?showimage="+String(file.name())+"\";\'>download</button></td></tr>"+list;
       else
         list = "<tr><td><button onclick=\'execute(location.origin+\"/?deleteimage="+String(file.name())+"\");\'>Delete</button></td><td><a onclick=\'document.getElementById(\"showimage\").src=location.origin+\"/?showimage="+String(file.name())+"\";\'>"+String(file.name())+"</a></td><td align=\'right\'>"+String(file.size())+" B</td><td><button onclick=\'location.href=location.origin+\"/?showimage="+String(file.name())+"\";\'>download</button></td></tr>"+list;        
     }
