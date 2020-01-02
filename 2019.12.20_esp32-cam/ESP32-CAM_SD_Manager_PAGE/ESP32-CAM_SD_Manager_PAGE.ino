@@ -48,10 +48,8 @@ const char* appassword = "12345678";    //AP端密碼至少要八個字元以上
 #include "SD_MMC.h"             //SD卡存取函式庫
 
 String Feedback="";   //回傳客戶端訊息
-
 //指令參數值
 String Command="",cmd="",P1="",P2="",P3="",P4="",P5="",P6="",P7="",P8="",P9="";
-
 //指令拆解狀態值
 byte ReceiveState=0,cmdState=1,strState=1,questionstate=0,equalstate=0,semicolonstate=0;
 
@@ -87,7 +85,7 @@ void ExecuteCommand()
   Serial.println("");
   
   if (cmd=="your cmd") {
-    // You can do anything
+    // You can do anything.
     // Feedback="<font color=\"red\">Hello World</font>";
   }
   else if (cmd=="ip") {
@@ -109,8 +107,7 @@ void ExecuteCommand()
     ledcWrite(4,val);  
   }  
   else if (cmd=="saveimage") {
-    Feedback=saveCapturedImage(P1)+"<br>";
-    Feedback+=ListImages(); 
+    Feedback=saveCapturedImage(P1)+"<br>"+ListImages(); 
   }  
   else if (cmd=="listimages") {
     Feedback=ListImages();
@@ -317,7 +314,7 @@ void setup() {
   
   SD_MMC.end();   
 
-  //Flash
+  //閃光燈
   ledcAttachPin(4, 4);  
   ledcSetup(4, 5000, 8);    
   
@@ -341,12 +338,12 @@ void setup() {
   } 
 
   if (WiFi.status() == WL_CONNECTED) {    //若連線成功
-    WiFi.softAP((WiFi.localIP().toString()+"_"+(String)apssid).c_str(), appassword);         
+    WiFi.softAP((WiFi.localIP().toString()+"_"+(String)apssid).c_str(), appassword);   //設定SSID顯示客戶端IP         
     Serial.println("");
     Serial.println("STAIP address: ");
     Serial.println(WiFi.localIP());  
 
-    for (int i=0;i<5;i++) {
+    for (int i=0;i<5;i++) {   //若連上WIFI設定閃光燈快速閃爍
       ledcWrite(4,10);
       delay(200);
       ledcWrite(4,0);
@@ -354,9 +351,9 @@ void setup() {
     }         
   }
   else {
-    WiFi.softAP((WiFi.softAPIP().toString()+"_"+(String)apssid).c_str(), appassword);   //設定SSID顯示客戶端IP           
+    WiFi.softAP((WiFi.softAPIP().toString()+"_"+(String)apssid).c_str(), appassword);         
 
-    for (int i=0;i<2;i++) {
+    for (int i=0;i<2;i++) {    //若連不上WIFI設定閃光燈慢速閃爍
       ledcWrite(4,10);
       delay(1000);
       ledcWrite(4,0);
@@ -413,6 +410,7 @@ void loop() {
               client.println("Content-Length: " + String(fb->len));             
               client.println("Connection: close");
               client.println();
+              
               uint8_t *fbBuf = fb->buf;
               size_t fbLen = fb->len;
               for (size_t n=0;n<fbLen;n=n+1024) {
@@ -425,6 +423,7 @@ void loop() {
                   client.write(fbBuf, remainder);
                 }
               }  
+              
               client.println();
               esp_camera_fb_return(fb);
             
@@ -489,6 +488,7 @@ void loop() {
               client.println("Access-Control-Allow-Origin: *");
               client.println("Connection: close");
               client.println();
+              
               String Data="";
               if (cmd!="")
                 Data = Feedback;
@@ -498,7 +498,8 @@ void loop() {
               int Index;
               for (Index = 0; Index < Data.length(); Index = Index+1000) {
                 client.print(Data.substring(Index, Index+1000));
-              }               
+              }           
+              
               client.println();
             }
                         
@@ -634,41 +635,6 @@ String saveCapturedImage(String filename) {
   digitalWrite(4, LOW);  
   
   return response;
-}
-
-//https://github.com/zenmanenergy/ESP8266-Arduino-Examples/
-String urlencode(String str)
-{
-    String encodedString="";
-    char c;
-    char code0;
-    char code1;
-    char code2;
-    for (int i =0; i < str.length(); i++){
-      c=str.charAt(i);
-      if (c == ' '){
-        encodedString+= '+';
-      } else if (isalnum(c)){
-        encodedString+=c;
-      } else{
-        code1=(c & 0xf)+'0';
-        if ((c & 0xf) >9){
-            code1=(c & 0xf) - 10 + 'A';
-        }
-        c=(c>>4)&0xf;
-        code0=c+'0';
-        if (c > 9){
-            code0=c - 10 + 'A';
-        }
-        code2='\0';
-        encodedString+='%';
-        encodedString+=code0;
-        encodedString+=code1;
-        //encodedString+=code2;
-      }
-      yield();
-    }
-    return encodedString;
 }
 
 //拆解命令字串置入變數
