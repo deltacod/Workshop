@@ -50,7 +50,8 @@ https://fustyles.github.io/webduino/iframe_20180802/blockly.json
 ESP8266 (ESP01、ESP12E、ESP32)、LinkIt7697 官方網址要改為http
 https://fustyles.github.io/webduino/ESP8266_20190128/blockly.json
 
-
+語音辨識
+https://fustyles.github.io/webduino/SpeechRecognition_20191225/blockly.json
 
 [ESP32-CAM 韌體]
 https://github.com/fustyles/Arduino/tree/master/ESP32-CAM_MyBlockly_JSON
