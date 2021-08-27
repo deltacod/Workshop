@@ -19,7 +19,7 @@ void setup() {
 void loop() {
   int distance = hc.dist();
   if (distance>10&&distance<=20) {
-    delay(1000);   //一秒後重新偵測一次距離，要兩次都在範圍內才噴酒精。
+    delay(1000);   //一秒後重新偵測一次距離，要兩次都在範圍內才噴酒精，避免有風吹草動就亂噴。
     
     distance = hc.dist();
     if (distance>10&&distance<=20) {
