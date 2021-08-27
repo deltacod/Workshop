@@ -30,7 +30,7 @@ void loop() {
         myservo.write(0);
         delay(1200);
       }
-      delay(3000);      
+      delay(3000);    //3秒後重新偵測
     }
   }
 }
